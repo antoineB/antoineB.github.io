@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8">
+    <title>Ideas of a match form for PHP</title>
+    <meta name="description" content="This post explore the idea of how would look like if pattern matching would be added to PHP.  And by pattern matching i actually mean racket's match form....">
+    <meta name="author"      content="antoine">
+    <meta name="keywords"    content="php, racket">
+    <meta name="viewport"    content="width=device-width, initial-scale=1.0">
+    <link rel="icon"      href="/favicon.ico">
+    <link rel="canonical" href="http://antoineB.github.io/blog/2017/03/05/ideas-of-a-match-form-for-php/">
+    <link rel="next" href="/blog/2016/01/09/exploring-typecheking-sql-query-in-typed-racket/">
+    <link rel="prev" href="/blog/2017/05/07/disordered-letters/">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/pygments.css">
+    <!-- <link rel="stylesheet" type="text/css" href="/css/scribble.css"> -->
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <!-- Feeds -->
+    <link ref="alternate" type="application/atom+xml"
+          href="/feeds/all.atom.xml" title="Atom Feed">
+    <link ref="alternate" type="application/rss+xml"
+          href="/feeds/all.rss.xml" title="RSS Feed">
+  </head>
+  <body>
+    <!-- A standard Twitter Bootstrap nav bar -->
+    <header class="navbar navbar-default navbar-inverse"
+            role="banner">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button"
+                  class="navbar-toggle"
+                  data-toggle="collapse"
+                  data-target=".our-nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/index.html" class="navbar-brand">antoineB's blog</a>
+        </div>
+        <div class="collapse navbar-collapse our-nav-collapse"
+             role="navigation">
+          <ul class="nav navbar-nav">
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                Tags <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="/index.html">All Posts</a></li>
+
+<li><a href="/tags/javascript.html">javascript</a></li>
+
+<li><a href="/tags/language.html">language</a></li>
+
+<li><a href="/tags/php.html">php</a></li>
+
+<li><a href="/tags/racket.html">racket</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="/About.html">About</a>
+            </li> 
+            <li><a href="/feeds/all.atom.xml">Atom</a></li>
+            <li><a href="/feeds/all.rss.xml">RSS</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <div class="container">
+      <div class="row">
+
+        <!-- Main column -->
+        <div id="content" class="col-md-10">
+
+
+
+
+
+          <article class="hentry">
+  <header>
+    <h1><span class="entry-title">Ideas of a match form for PHP</span> <small>
+<time datetime="2017-03-05" pubdate="true">2017-03-05</time></small></h1>
+  </header>
+   <div class="entry-content">
+
+<p class="lead">This post explore the idea of how would look like if pattern matching would be added to PHP.</p>
+
+<br />
+
+<p>And by pattern matching i actually mean racket&rsquo;s <a href="https://docs.racket-lang.org/reference/match.html?q=match#%28form._%28%28lib._racket%2Fmatch..rkt%29._match%29%29">match</a> form.</p>
+<!-- more-->
+
+<h2 id="an-example">An example</h2>
+
+<div class="brush: php">
+ <table class="sourcetable">
+  <tbody>
+   <tr>
+    <td class="linenos">
+     <div class="linenodiv">
+      <pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36</pre></div></td>
+    <td class="code">
+     <div class="source">
+      <pre><span class="cp">&lt;?php</span>
+
+<span class="k">class</span> <span class="nc">Maison</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$voiture</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nv">$camion</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">moreVoiture</span><span class="p">(</span><span class="nv">$value</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">voiture</span> <span class="o">+</span> <span class="nv">$value</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="nx">match</span><span class="p">(</span><span class="nv">$someExpr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="mi">12</span><span class="o">:</span>
+        <span class="nb">var_dump</span><span class="p">(</span><span class="mi">12</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="s2">"toto"</span><span class="o">:</span> 
+        <span class="nb">var_dump</span><span class="p">(</span><span class="s2">"toto"</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="p">(</span><span class="nx">int</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$someVar</span><span class="o">:</span>
+        <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$someVar</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="nx">instanceof</span> <span class="nx">Maison</span><span class="p">(</span><span class="o">-&gt;</span><span class="na">voiture</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-&gt;</span><span class="na">camion</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="nx">int</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$r</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$result</span><span class="o">:</span>
+        <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+        <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$r</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="nx">instanceof</span> <span class="nx">Maison</span><span class="p">(</span><span class="o">-&gt;</span><span class="na">moreVoiture</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-&gt;</span><span class="na">camion</span> <span class="o">=&gt;</span> <span class="nx">instanceof</span> <span class="nx">Maison</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$r</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$result</span><span class="o">:</span>
+        <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+        <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$r</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="nx">mixed</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$third</span><span class="p">]</span><span class="o">:</span>
+        <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$third</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="p">[</span><span class="o">...</span><span class="p">(</span><span class="nx">mixed</span><span class="p">),</span> <span class="p">(</span><span class="nx">mixed</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$last</span><span class="p">]</span><span class="o">:</span> 
+        <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$last</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">default</span><span class="o">:</span>
+        <span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></tbody></table>
+</div>
+
+<p>Explaining of the behaviours involved here:</p>
+
+<ul>
+ <li><code>12</code>, <code>&ldquo;toto&rdquo;</code> or any scalar will be check with  <code>===</code>.</li>
+ <li><code>(int)</code>, <code>(string)</code> will match against a type following  PHP rules.</li>
+ <li><code>(mixed)</code> is a new rule meaning everything, wildcard. Often written  <code>_</code> in other pattern matching.</li>
+ <li><code>instanceof</code> will check for <code>instanceof</code> straight  forward. It use <code>-&gt;property</code> and <code>-&gt;method()</code> to  make a distinction between properties and methods.</li>
+ <li><code>&hellip;</code> is used in array to express 0 or more.</li>
+ <li><code>as</code> is used to introduce new variable in the code.</li></ul>
+
+<h2 id="the-grammar">The grammar</h2>
+
+<p>A kind of yacc grammar, terminals are indicated in quotes and r&rsquo;&rsquo; for regex.</p>
+
+<div class="brush: yacc">
+ <table class="sourcetable">
+  <tbody>
+   <tr>
+    <td class="linenos">
+     <div class="linenodiv">
+      <pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56</pre></div></td>
+    <td class="code">
+     <div class="source">
+      <pre>pattern:
+    | scalar as_pattern
+    | type as_pattern
+    | &#39;instanceof&#39; classname &#39;(&#39; object_list &#39;)&#39; as_pattern
+    | array_pattern as_pattern
+    ;
+
+type:
+    | &#39;(bool)&#39;
+    | &#39;(int)&#39;
+    | &#39;(string)&#39;
+    | &#39;(resource)&#39;
+    | &#39;(float)&#39; 
+    | &#39;(array)&#39;
+    | &#39;(object)&#39;
+    | &#39;(mixed)&#39;
+    ;
+
+scalar:
+    | r&#39;[0-9]+&#39; // integer
+    | r&#39;[0-9]*.[0-9]*&#39; // float
+    | r"&#39;[^&#39;]*&#39;"
+    | r&#39;"[^"]*"&#39; //string
+    | true
+    | false
+    | null
+    ;
+
+array_list:
+    | pattern &#39;,&#39; array_list
+    | pattern
+    | &#39;...&#39; pattern &#39;,&#39; array_list
+    | &#39;...&#39; pattern
+    |
+    ;
+
+array_pattern:
+    | &#39;array&#39; &#39;(&#39; array_list &#39;)&#39;
+    | &#39;[&#39; array_list &#39;]&#39;
+    | &#39;array&#39; &#39;(&#39; array_key_list &#39;)&#39;
+    | &#39;[&#39; array_key_list &#39;]&#39;
+    ;
+
+object_list:
+    | r&#39;-&gt;[a-zA-Z0-9_]+&#39; &#39;=&gt;&#39; pattern
+    | r&#39;-&gt;[a-zA-Z0-9_]+&#39; &#39;(&#39; any_php_expr &#39;)&#39; &#39;=&gt;&#39; pattern
+    ;
+
+variable:
+    | r&#39;$[a-zA-z0-9_]+&#39; // like $someVar
+    ;
+
+as_pattern:
+    | // empty
+    | &#39;as&#39; variable
+    ;
+</pre></div>
+</td></tr></tbody></table>
+</div>
+
+<h2 id="implementing-a-poc">Implementing a P.O.C.</h2>
+
+<p>Like <code>match</code>, a macro that spit out racket code, i will implement this as a pre-processor that spit out valid PHP. This is not a usable solution because it breaks line number in errors messages. i have started to write this 
+ <abbr title="Proof Of Concept">POC</abbr> in the PHP VM (to keep correct line number) but the whole process was slow and cumbersome (<a href="/code/poc_vm.patch">here is the diff</a> that pave the basics form commit 85b9055a86 [aka PHP 7.1]). The other problem is the generate code rely on 3 globals variables and the whole thing will turn bad if you mess with them inside a match.</p>
+
+<p>Some quick glance at how this is done.</p>
+
+<div class="brush: php">
+ <table class="sourcetable">
+  <tbody>
+   <tr>
+    <td class="linenos">
+     <div class="linenodiv">
+      <pre>1
+2
+3
+4
+5
+6</pre></div></td>
+    <td class="code">
+     <div class="source">
+      <pre><span class="cp">&lt;?php</span>
+
+<span class="nx">match</span> <span class="p">(</span><span class="nx">expr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="nx">pattern</span><span class="o">:</span> <span class="nx">statements</span><span class="o">...</span> <span class="k">break</span><span class="p">;</span>
+    <span class="k">default</span><span class="o">:</span> <span class="c1">// comme switch</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></tbody></table>
+</div>
+
+<p>Will ouput:</p>
+
+<div class="brush: php">
+ <table class="sourcetable">
+  <tbody>
+   <tr>
+    <td class="linenos">
+     <div class="linenodiv">
+      <pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29</pre></div></td>
+    <td class="code">
+     <div class="source">
+      <pre><span class="cp">&lt;?php</span>
+
+<span class="c1">// If there is a match before every globals variables are re-initialized.</span>
+
+<span class="c1">// Used to eval expression just once.</span>
+<span class="nv">$__MATCH__expr</span> <span class="o">=</span> <span class="nx">expr</span><span class="p">;</span>
+<span class="c1">// Used to store variables and populare (extract) the current scope with them</span>
+<span class="nx">only</span> <span class="k">if</span> <span class="nx">the</span> <span class="nx">whole</span> <span class="nx">clause</span> <span class="nx">match</span><span class="o">.</span>
+<span class="nv">$__MATCH__variables</span> <span class="o">=</span> <span class="p">[];</span> <span class="c1">// of shape &#39;variableName&#39; =&gt; value.</span>
+<span class="nv">$__MATCH__result</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+
+<span class="c1">// Skeleton of any pattern clause.</span>
+<span class="nv">$__MATCH__case0</span> <span class="o">=</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$__MATCH__expr</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="o">&amp;</span><span class="nv">$__MATCH__variables</span><span class="p">,</span> <span class="o">&amp;</span><span class="nv">$__MATCH__result</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$__MATCH__inner_variables</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="nv">$__MATCH__result</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="nx">pattern_code</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$__MATCH__result</span> <span class="o">==</span> <span class="k">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$__MATCH__variables</span> <span class="o">=</span> <span class="nb">array_merge</span><span class="p">(</span><span class="nv">$__MATCH__variables</span><span class="p">,</span> <span class="nv">$__MATCH__inner_variables</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nv">$__MATCH__result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Use switch because match has the same behaviour of switch regarding break.</span>
+<span class="k">switch</span> <span class="p">(</span><span class="k">true</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">case</span> <span class="nv">$__MATCH__case0</span><span class="p">(</span><span class="nv">$__MATCH__expr</span><span class="p">)</span><span class="o">:</span>
+      <span class="nb">extract</span><span class="p">(</span><span class="nv">$__MATCH__variables</span><span class="p">);</span>
+      <span class="nx">statements</span><span class="p">;</span>
+      <span class="k">break</span><span class="p">;</span> <span class="c1">// or not</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></tbody></table>
+</div>
+
+<p>Another example:</p>
+
+<div class="brush: php">
+ <table class="sourcetable">
+  <tbody>
+   <tr>
+    <td class="linenos">
+     <div class="linenodiv">
+      <pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25</pre></div></td>
+    <td class="code">
+     <div class="source">
+      <pre><span class="cp">&lt;?php</span>
+
+<span class="c1">// for case (int) as $someVar: var_dump($someVar); break;</span>
+
+<span class="nv">$__MATCH__case2</span> <span class="o">=</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$__MATCH__expr</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="o">&amp;</span><span class="nv">$__MATCH__variables</span><span class="p">,</span> <span class="o">&amp;</span><span class="nv">$__MATCH__result</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$__MATCH__inner_variables</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="nv">$__MATCH__result</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$__MATCH__result</span> <span class="o">===</span> <span class="k">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">is_int</span><span class="p">(</span><span class="nv">$__MATCH__expr</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nv">$__MATCH__inner_variables</span><span class="p">[</span><span class="s1">&#39;someVar&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$__MATCH__expr</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nv">$__MATCH__result</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span> 
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$__MATCH__result</span> <span class="o">===</span> <span class="k">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$__MATCH__variables</span> <span class="o">=</span> <span class="nb">array_merge</span><span class="p">(</span><span class="nv">$__MATCH__variables</span><span class="p">,</span> <span class="nv">$__MATCH__inner_variables</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nv">$__MATCH__result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// and in the switch</span>
+
+<span class="c1">// case $__MATCH__case0($__MATCH__expr):</span>
+<span class="c1">//     extract($__MATCH__variables);</span>
+<span class="c1">//     var_dump($someVar); break;</span>
+</pre></div>
+</td></tr></tbody></table>
+</div>
+
+<p>I don&rsquo;t go into other examples you get the idea, see <a href="/code/matchphp.rkt">the preprocessor</a> or <a href="/code/matchphpexample.php">an example</a> and <a href="/code/matchphpexample_output.php">its output</a> for more.</p>
+
+<h2 id="shortcomings">Shortcomings</h2>
+
+<p>The above grammar misses several elements from PHP and racket match.</p>
+
+<h3 id="there-is-no-array-key">There is no array key</h3>
+
+<div class="brush: yacc">
+ <table class="sourcetable">
+  <tbody>
+   <tr>
+    <td class="linenos">
+     <div class="linenodiv">
+      <pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre></div></td>
+    <td class="code">
+     <div class="source">
+      <pre>string_or_number:
+    | r&#39;[0-9]+&#39; // integer
+    | r&#39;[0-9]*.[0-9]*&#39; // float
+    | r"&#39;[^&#39;]*&#39;"
+    | r&#39;"[^"]*"&#39; //string
+    ;
+
+string_or_number_type:
+    | &#39;(int)&#39;
+    | &#39;(string)&#39;
+    | &#39;(mixed)&#39;
+    ;
+
+array_list:
+    | pattern &#39;,&#39; array_list
+    | pattern
+    | &#39;...&#39; pattern &#39;,&#39; array_list
+    | &#39;...&#39; pattern
+    | string_or_number =&gt; pattern &#39;,&#39; array_list
+    | string_or_number =&gt; pattern
+    | &#39;...&#39; string_or_number_type =&gt; pattern &#39;,&#39; array_list
+    | &#39;...&#39; string_or_number_type =&gt; pattern
+    |
+    ;
+</pre></div>
+</td></tr></tbody></table>
+</div>
+
+<h3 id="only-scalar-allowed">Only Scalar allowed</h3>
+
+<p>If general purpose PHP expression are allowed it is unclear how it will possible to and (&amp;&amp; and also negating !) two clauses without adding a new keyword. The or case is simple it just need to put several case one after the other without break in between.</p>
+
+<p>I see only 4 solution:</p>
+
+<ul>
+ <li>Adding a new keyword like <code>&amp;&amp;&amp;</code>.</li>
+ <li>Removing expression all together.</li>
+ <li>Removing and and not all together.</li>
+ <li>Escape expression with something like <code>eval</code> example <code>case eval(1 + 1) &amp;&amp; eval($obj-&gt;getStuff()):</code>.</li></ul>
+
+<p>I will bet on now for removing and and not.</p>
+
+<h3 id="traversable-and-object-behaving-as-array">Traversable and object behaving as array</h3>
+
+<p>I would choose still having <code>array</code> match to check for element be an array. And introduce a new rule like <code>&lsquo;instanceof&rsquo; &lsquo;Traversable&rsquo; &rsquo;(&rsquo; array_list &rsquo;)&rsquo;</code>.</p>
+
+<h3 id="where-are--and-app-from-rackets-match">Where are <code>?</code> and <code>app</code> from racket&rsquo;s match</h3>
+
+<p>For <code>?</code> it is possible to add a guard:</p>
+
+<div class="brush: php">
+ <table class="sourcetable">
+  <tbody>
+   <tr>
+    <td class="linenos">
+     <div class="linenodiv">
+      <pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td>
+    <td class="code">
+     <div class="source">
+      <pre><span class="cp">&lt;?php</span>
+
+<span class="c1">// case (mixed) as $pattern if (is_something($pattern)):</span>
+
+<span class="c1">// $pattern is implicit</span>
+<span class="c1">// case (mixed) if (is_something($pattern)):</span>
+
+<span class="c1">// even (mixed) could be implicit</span>
+<span class="c1">// case if (is_something($pattern)):</span>
+</pre></div>
+</td></tr></tbody></table>
+</div>
+
+<p>Go a bit deeper into implicit <code>$pattern</code></p>
+
+<div class="brush: php">
+ <table class="sourcetable">
+  <tbody>
+   <tr>
+    <td class="linenos">
+     <div class="linenodiv">
+      <pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td>
+    <td class="code">
+     <div class="source">
+      <pre><span class="cp">&lt;?php</span>
+
+<span class="nx">match</span> <span class="p">([</span><span class="mi">1</span><span class="p">])</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="p">[(</span><span class="nx">mixed</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="nb">var_dump</span><span class="p">(</span><span class="nv">$pattern</span><span class="p">)</span> <span class="o">||</span> <span class="k">true</span><span class="p">)]</span> <span class="k">if</span> <span class="p">(</span><span class="nb">var_dump</span><span class="p">(</span><span class="nv">$pattern</span><span class="p">)</span> <span class="o">||</span> <span class="k">true</span><span class="p">)</span><span class="o">:</span>
+<span class="p">}</span>
+
+<span class="c1">// will print</span>
+<span class="c1">// 1</span>
+<span class="c1">// array(1)</span>
+
+<span class="c1">// $pattern is the current part being matched.</span>
+
+<span class="c1">// Ifs are executed depth first search.</span>
+</pre></div>
+</td></tr></tbody></table>
+</div>
+
+<p>For the <code>app</code> parts:</p>
+
+<div class="brush: php">
+ <table class="sourcetable">
+  <tbody>
+   <tr>
+    <td class="linenos">
+     <div class="linenodiv">
+      <pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td>
+    <td class="code">
+     <div class="source">
+      <pre><span class="x">// will match [1, &#39;stuff&#39;]</span>
+<span class="x">// the next pattern is the return value of evaluated expression.</span>
+<span class="x">// case [1, eval(preg*match(&#39;/stuff/&#39;, $pattern, $m)) =&gt; 1]:</span>
+
+<span class="x">// will match [1, &#39;stu&#39;] but not [1, &#39;stuff&#39;]</span>
+<span class="x">// case [1, eval(preg*match(&#39;/stu(ff)?/&#39;, $pattern, $m)) use($m) =&gt; [(mixed)]]:</span>
+<span class="x">// use($m) subsitute $pattern value with $m&#39;s value.</span>
+
+<span class="x">// If a callable is given to eval so it is called</span>
+<span class="x">// case [1, eval(function ($pattern) { preg_match(&#39;/stu(ff)?/&#39;, $pattern, $m); return $m; }) =&gt; [(mixed)]]:</span>
+
+<span class="x">// because the syntax with eval could be confusing with a php expression and</span>
+<span class="x">// it need to add &#39;use&#39;, another solution is to only allow the function syntax.</span>
+
+<span class="x">// case [1, function ($pattern) { preg_match(&#39;/stu(ff)?/&#39;, $pattern, $m); return $m; } =&gt; [(mixed)]]:</span>
+
+<span class="x">// verbose but the clearer for me.</span>
+</pre></div>
+</td></tr></tbody></table>
+</div>
+
+<h3 id="conclusion-with-whole-hypothetical-grammar">Conclusion with whole hypothetical grammar</h3>
+
+<p>Regarding previous point here is a grammar that sum it up (contrary to the previous one i didn&rsquo;t check if it didn&rsquo;t run into LLAR conflicts).</p>
+
+<div class="brush: yacc">
+ <table class="sourcetable">
+  <tbody>
+   <tr>
+    <td class="linenos">
+     <div class="linenodiv">
+      <pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96</pre></div></td>
+    <td class="code">
+     <div class="source">
+      <pre>pattern:
+    | apply_pattern pattern_without_apply
+    | pattern_without_apply
+    ;
+
+pattern_without_apply:
+    | scalar as_pattern if_pattern
+    | type as_pattern if_pattern
+    | &#39;instanceof&#39; &#39;Traversable&#39; &#39;(&#39; array_list &#39;)&#39; as_pattern if_pattern
+    | &#39;instanceof&#39; classname &#39;(&#39; object_list &#39;)&#39; as_pattern if_pattern
+    | array_pattern as_pattern if_pattern
+    | php_expr as_pattern if_pattern // hope it doesn&#39;t conflict with the rest, array() for exemple
+    ;
+
+type:
+    | &#39;(bool)&#39;
+    | &#39;(int)&#39;
+    | &#39;(string)&#39;
+    | &#39;(resource)&#39;
+    | &#39;(float)&#39; 
+    | &#39;(array)&#39;
+    | &#39;(object)&#39;
+    | &#39;(mixed)&#39;
+    ;
+
+scalar:
+    | r&#39;[0-9]+&#39; // integer
+    | r&#39;[0-9]*.[0-9]*&#39; // float
+    | r"&#39;[^&#39;]*&#39;"
+    | r&#39;"[^"]*"&#39; //string
+    | true
+    | false
+    | null
+    ;
+
+array_list:
+    | pattern &#39;,&#39; array_list
+    | pattern
+    | &#39;...&#39; pattern &#39;,&#39; array_list
+    | &#39;...&#39; pattern
+    |
+    ;
+
+array_pattern:
+    | &#39;array&#39; &#39;(&#39; array_list &#39;)&#39;
+    | &#39;[&#39; array_list &#39;]&#39;
+    | &#39;array&#39; &#39;(&#39; array_key_list &#39;)&#39;
+    | &#39;[&#39; array_key_list &#39;]&#39;
+    ;
+
+object_list:
+    | r&#39;-&gt;[a-zA-Z0-9_]+&#39; &#39;=&gt;&#39; pattern
+    | r&#39;-&gt;[a-zA-Z0-9_]+&#39; &#39;(&#39; any_php_expr &#39;)&#39; &#39;=&gt;&#39; pattern
+    ;
+
+variable:
+    | r&#39;$[a-zA-z0-9_]+&#39; // like $someVar
+    ;
+
+as_pattern:
+    | // empty
+    | &#39;as&#39; variable
+    ;
+
+if_pattern:
+    | // empty
+    | &#39;if&#39; &#39;(&#39; php_expr &#39;)&#39;
+    ;
+
+apply_pattern:
+    | &#39;function&#39; &#39;(&#39; variable &#39;)&#39; &#39;use&#39; &#39;(&#39; stuff &#39;)&#39; &#39;{&#39; statements &#39;}&#39; &#39;=&gt;&#39;
+    ;
+
+array_key:
+    | apply_pattern php_expr as_pattern if_pattern
+    | php_expr as_pattern if_pattern
+    ;
+
+array_key_ellipsis:
+    | &#39;(int)&#39; as_pattern if_pattern 
+    | &#39;(string)&#39; as_pattern if_pattern
+    | &#39;(mixed)&#39; as_pattern if_pattern
+    | apply_pattern pattern_without_apply
+    ;
+
+array_list:
+    | pattern &#39;,&#39; array_list
+    | pattern
+    | &#39;...&#39; pattern &#39;,&#39; array_list
+    | &#39;...&#39; pattern
+    | array_key =&gt; pattern &#39;,&#39; array_list
+    | array_key =&gt; pattern
+    | &#39;...&#39; array_key_ellipsis =&gt; pattern &#39;,&#39; array_list
+    | &#39;...&#39; array_key_ellipsis =&gt; pattern
+    |
+    ;
+</pre></div>
+</td></tr></tbody></table>
+</div>
+
+<p>It add most of the feature from racket&rsquo;s <code>match</code> without adding any new keyword. The missing element are <code>and</code>, <code>not</code>, <code>regexp</code> (very easy to add with a new keyword like <code>&lsquo;preg_match&rsquo; &rsquo;/regex/&rsquo; &rsquo;=&gt;&rsquo; pattern</code>) and <code>..k</code>.</p>
+
+<h4 id="the-whole-grammar-if-phpexpr-is-removed-from-allowed-pattern">The whole grammar if php_expr is removed from allowed pattern</h4>
+
+<div class="brush: yacc">
+ <table class="sourcetable">
+  <tbody>
+   <tr>
+    <td class="linenos">
+     <div class="linenodiv">
+      <pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107</pre></div></td>
+    <td class="code">
+     <div class="source">
+      <pre>pattern:
+    | apply_pattern pattern_without_apply
+    | pattern_without_apply
+    ;
+
+just_pattern:
+    | variable
+    | scalar 
+    | type 
+    | &#39;instanceof&#39; &#39;Traversable&#39; &#39;(&#39; array_list &#39;)&#39;
+    | &#39;instanceof&#39; classname &#39;(&#39; object_list &#39;)&#39;
+    | array_pattern
+    ;
+
+pattern_without_apply:
+    | just_pattern scalar as_pattern if_pattern
+    | pattern &#39;&amp;&amp;&#39; pattern
+    | pattern &#39;||&#39; pattern 
+    | &#39;(&#39; pattern &#39;)&#39; as_pattern if_pattern // resolve ambiguity with as_pattern with &#39;||&#39; and &#39;&amp;&amp;&#39; rule.
+    | pattern &#39;and&#39; just_pattern as_pattern if_pattern
+    | pattern &#39;or&#39; just_pattern as_pattern if_pattern
+    | &#39;!&#39; pattern
+    ;
+
+type:
+    | &#39;(bool)&#39;
+    | &#39;(int)&#39;
+    | &#39;(string)&#39;
+    | &#39;(resource)&#39;
+    | &#39;(float)&#39; 
+    | &#39;(array)&#39;
+    | &#39;(object)&#39;
+    | &#39;(mixed)&#39;
+    ;
+
+scalar:
+    | &#39;==&#39; scalar // weak checking instead of strong one by default
+    | r&#39;[0-9]+&#39; // integer
+    | r&#39;[0-9]*.[0-9]*&#39; // float
+    | r"&#39;[^&#39;]*&#39;"
+    | r&#39;"[^"]*"&#39; //string
+    | true
+    | false
+    | null
+    ;
+
+array_list:
+    | pattern &#39;,&#39; array_list
+    | pattern
+    | &#39;...&#39; pattern &#39;,&#39; array_list
+    | &#39;...&#39; pattern
+    |
+    ;
+
+array_pattern:
+    | &#39;array&#39; &#39;(&#39; array_list &#39;)&#39;
+    | &#39;[&#39; array_list &#39;]&#39;
+    | &#39;array&#39; &#39;(&#39; array_key_list &#39;)&#39;
+    | &#39;[&#39; array_key_list &#39;]&#39;
+    ;
+
+object_list:
+    | r&#39;-&gt;[a-zA-Z0-9_]+&#39; &#39;=&gt;&#39; pattern
+    | r&#39;-&gt;[a-zA-Z0-9_]+&#39; &#39;(&#39; any_php_expr &#39;)&#39; &#39;=&gt;&#39; pattern
+    ;
+
+variable:
+    | r&#39;$[a-zA-z0-9_]+&#39; // like $someVar
+    ;
+
+as_pattern:
+    | // empty
+    | &#39;as&#39; variable
+    ;
+
+if_pattern:
+    | // empty
+    | &#39;if&#39; &#39;(&#39; php_expr &#39;)&#39;
+    ;
+
+apply_pattern:
+    | &#39;function&#39; &#39;(&#39; variable &#39;)&#39; &#39;use&#39; &#39;(&#39; stuff &#39;)&#39; &#39;{&#39; statements &#39;}&#39; &#39;=&gt;&#39;
+    ;
+
+array_key:
+    | apply_pattern php_expr as_pattern if_pattern
+    | php_expr as_pattern if_pattern
+    ;
+
+array_key_ellipsis:
+    | &#39;(int)&#39; as_pattern if_pattern 
+    | &#39;(string)&#39; as_pattern if_pattern
+    | &#39;(mixed)&#39; as_pattern if_pattern
+    | apply_pattern pattern_without_apply
+    ;
+
+array_list:
+    | pattern &#39;,&#39; array_list
+    | pattern
+    | &#39;...&#39; pattern &#39;,&#39; array_list
+    | &#39;...&#39; pattern
+    | array_key =&gt; pattern &#39;,&#39; array_list
+    | array_key =&gt; pattern
+    | &#39;...&#39; array_key_ellipsis =&gt; pattern &#39;,&#39; array_list
+    | &#39;...&#39; array_key_ellipsis =&gt; pattern
+    |
+    ;
+</pre></div>
+</td></tr></tbody></table>
+</div>
+
+<p>This one allow weak checking, negating pattern, and of pattern and <code>$var</code> as a shortcut for <code>(mixed) as $var</code>.</p>
+   </div>
+   <footer>
+  </footer>
+</article>
+        </div>
+      </div>
+      <footer>
+        <hr/>
+        <p>Site generated
+        by <a href="https://github.com/greghendershott/frog">Frog</a>,
+        the <strong>fr</strong>ozen bl<strong>og</strong> tool.</p>
+        <p>Using <a href="http://twitter.github.com/bootstrap/index.html">Bootstrap</a>.</p>
+      </footer>
+    </div>
+    <!-- </body> JS -->
+    <!-- <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script> -->
+    <!-- <script type="text/javascript" src="/js/bootstrap.min.js"></script> -->
+  </body>
+</html>

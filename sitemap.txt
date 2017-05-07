@@ -1,0 +1,7 @@
+http://antoineB.github.io/blog/2015/07/06/mapping-data-from-sql-result-to-struct/
+http://antoineB.github.io/blog/2016/01/09/exploring-typecheking-sql-query-in-typed-racket/
+http://antoineB.github.io/blog/2017/05/07/disordered-letters/
+http://antoineB.github.io/blog/2015/06/02/basic-fastcgi-with-racket/
+http://antoineB.github.io/blog/2015/08/29/transpile-php-to-javascript/
+http://antoineB.github.io/blog/2017/03/05/ideas-of-a-match-form-for-php/
+http://antoineB.github.io/About.html
