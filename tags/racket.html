@@ -104,60 +104,25 @@
 <p>The goal is to make this typecheck:</p>
 
 <div class="brush: racket">
- <table class="sourcetable">
-  <tbody>
-   <tr>
-    <td class="linenos">
-     <div class="linenodiv">
-      <pre>1
-2
-3
-4
-5
-6
-7</pre></div></td>
-    <td class="code">
-     <div class="source">
-      <pre><span class="p">(</span><span class="n">:</span> <span class="n">some-query</span> <span class="n">:</span> <span class="p">(</span><span class="n">Listof</span> <span class="p">(</span><span class="n">Vector</span> <span class="n">String</span> <span class="n">String</span><span class="p">)))</span>
-<span class="p">(</span><span class="k">define</span> <span class="n">some-query</span>
-  <span class="p">(</span><span class="n">query</span>
-   <span class="n">movies</span>
-   <span class="kd">#:from</span>     <span class="p">([</span><span class="n">actor</span> <span class="n">a</span><span class="p">]</span> <span class="p">[</span><span class="n">movie</span> <span class="n">m</span><span class="p">])</span>
-   <span class="kd">#:where</span>    <span class="p">(</span><span class="nb">=</span> <span class="n">a.name</span> <span class="s2">"Jhon Wayne"</span><span class="p">)</span>
-   <span class="kd">#:select</span>   <span class="p">(</span><span class="n">a.name</span> <span class="n">m.name</span><span class="p">)))</span>
-</pre></div>
-</td></tr></tbody></table>
-</div>
+ <pre><code>(: some-query : (Listof (Vector String String)))
+(define some-query
+  (query
+   movies
+   #:from     ([actor a] [movie m])
+   #:where    (= a.name "Jhon Wayne")
+   #:select   (a.name m.name)))</code></pre></div>
 
 <p>With the schema defined as:</p>
 
 <div class="brush: racket">
- <table class="sourcetable">
-  <tbody>
-   <tr>
-    <td class="linenos">
-     <div class="linenodiv">
-      <pre>1
-2
-3
-4
-5
-6
-7
-8</pre></div></td>
-    <td class="code">
-     <div class="source">
-      <pre><span class="p">(</span><span class="n">define-schema</span> <span class="n">movies</span>
-  <span class="p">(</span><span class="n">actor</span>    <span class="p">[</span><span class="n">id</span> <span class="n">Integer</span><span class="p">]</span>
-            <span class="p">[</span><span class="n">name</span> <span class="n">String</span><span class="p">])</span>
-  <span class="p">(</span><span class="n">movie</span>    <span class="p">[</span><span class="n">id</span> <span class="n">Integer</span><span class="p">]</span>
-            <span class="p">[</span><span class="n">name</span> <span class="n">String</span><span class="p">]</span>
-            <span class="p">[</span><span class="n">director_id</span> <span class="n">Integer</span><span class="p">])</span>
-  <span class="p">(</span><span class="n">director</span> <span class="p">[</span><span class="n">id</span> <span class="n">Integer</span><span class="p">]</span>
-            <span class="p">[</span><span class="n">name</span> <span class="n">String</span><span class="p">]))</span>
-</pre></div>
-</td></tr></tbody></table>
-</div>
+ <pre><code>(define-schema movies
+  (actor    [id Integer]
+            [name String])
+  (movie    [id Integer]
+            [name String]
+            [director_id Integer])
+  (director [id Integer]
+            [name String]))</code></pre></div>
 <footer class="read-more"><a href="/blog/2016/01/09/exploring-typecheking-sql-query-in-typed-racket/">&hellip;more&hellip;</a></footer>
 </article>
 <article>
@@ -172,43 +137,21 @@
 
 <h2 id="the-goal">The goal</h2>
 
-<p>At end of this post we will achive this:</p>
+<p>At end of this post we will archive this:</p>
 
 <div class="brush: racket">
- <table class="sourcetable">
-  <tbody>
-   <tr>
-    <td class="linenos">
-     <div class="linenodiv">
-      <pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12</pre></div></td>
-    <td class="code">
-     <div class="source">
-      <pre><span class="c1">;; assume the table actor exist and have at least id, name, age</span>
+ <pre><code>;; assume the table actor exist and have at least id, name, age
 
-<span class="p">(</span><span class="k">struct</span> <span class="n">actor</span> <span class="p">([</span><span class="n">id</span> <span class="kd">#:auto</span><span class="p">]</span> <span class="p">[</span><span class="n">name</span> <span class="kd">#:auto</span><span class="p">]</span> <span class="p">[</span><span class="n">age</span> <span class="kd">#:auto</span><span class="p">])</span> 
-  <span class="kd">#:transparent</span> <span class="kd">#:mutable</span> <span class="kd">#:auto-value</span> <span class="no">#f</span><span class="p">)</span>
+(struct actor ([id #:auto] [name #:auto] [age #:auto]) 
+  #:transparent #:mutable #:auto-value #f)
 
-<span class="p">(</span><span class="n">select</span>
-    <span class="p">([</span><span class="s2">"id"</span> <span class="n">actor</span> <span class="n">id</span><span class="p">]</span>
-     <span class="p">[</span><span class="s2">"name"</span> <span class="n">actor</span> <span class="n">name</span><span class="p">]</span>
-     <span class="p">[</span><span class="s2">"age"</span> <span class="n">actor</span> <span class="n">age</span><span class="p">])</span>
-  <span class="s2">"SELECT a.* FROM actor AS a where a.id = $1"</span>
-  <span class="mi">12</span><span class="p">)</span>
-<span class="c1">;; =&gt; &#39;(((actor 12 "some name" 80)))</span>
-</pre></div>
-</td></tr></tbody></table>
-</div>
+(select
+    (["id" actor id]
+     ["name" actor name]
+     ["age" actor age])
+  "SELECT a.* FROM actor AS a where a.id = $1"
+  12)
+;; =&gt; '(((actor 12 "some name" 80)))</code></pre></div>
 <footer class="read-more"><a href="/blog/2015/07/06/mapping-data-from-sql-result-to-struct/">&hellip;more&hellip;</a></footer>
 </article>
 <article>

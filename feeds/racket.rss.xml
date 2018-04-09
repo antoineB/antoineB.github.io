@@ -10,9 +10,10 @@
   <item>
    <title>Ideas of a match form for PHP</title>
    <link>http://antoineB.github.io/blog/2017/03/05/ideas-of-a-match-form-for-php/?utm_source=racket&amp;utm_medium=RSS</link>
-   <guid>urn:http-antoineB-github-io:-blog-2017-03-05-ideas-of-a-match-form-for-php</guid>
+   <guid isPermaLink="false">urn:http-antoineB-github-io:-blog-2017-03-05-ideas-of-a-match-form-for-php</guid>
    <pubDate>Sun, 05 Mar 2017 13:25:10 UT</pubDate>
-   <description>&lt;html&gt;
+   <author>antoine</author>
+   <description>
 &lt;p class="lead"&gt;This post explore the idea of how would look like if pattern matching would be added to PHP.&lt;/p&gt;
 
 &lt;br /&gt;
@@ -23,90 +24,44 @@
 &lt;h2 id="an-example"&gt;An example&lt;/h2&gt;
 
 &lt;div class="brush: php"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt; 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?php&lt;/span&gt;
+ &lt;pre&gt;&lt;code&gt;&amp;lt;?php
 
-&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Maison&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="nv"&gt;$voiture&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="nv"&gt;$camion&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="k"&gt;function&lt;/span&gt; &lt;span class="nf"&gt;moreVoiture&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$value&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;voiture&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nv"&gt;$value&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
+class Maison {
+    public $voiture = 1;
+    public $camion = 2;
+    public function moreVoiture($value) { return $this-&amp;gt;voiture + $value; }
+}
 
 
-&lt;span class="nx"&gt;match&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$someExpr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
-        &lt;span class="nb"&gt;var_dump&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s2"&gt;"toto"&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; 
-        &lt;span class="nb"&gt;var_dump&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"toto"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nv"&gt;$someVar&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
-        &lt;span class="nb"&gt;var_dump&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$someVar&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="nx"&gt;instanceof&lt;/span&gt; &lt;span class="nx"&gt;Maison&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;voiture&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;camion&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nv"&gt;$r&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nv"&gt;$result&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
-        &lt;span class="nb"&gt;var_dump&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$result&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="nb"&gt;var_dump&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$r&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="nx"&gt;instanceof&lt;/span&gt; &lt;span class="nx"&gt;Maison&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;moreVoiture&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;camion&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="nx"&gt;instanceof&lt;/span&gt; &lt;span class="nx"&gt;Maison&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nv"&gt;$r&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nv"&gt;$result&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
-        &lt;span class="nb"&gt;var_dump&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$result&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="nb"&gt;var_dump&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$r&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;mixed&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nv"&gt;$third&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
-        &lt;span class="nb"&gt;var_dump&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$third&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;mixed&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;mixed&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nv"&gt;$last&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; 
-        &lt;span class="nb"&gt;var_dump&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$last&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;default&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
-        &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+match($someExpr) {
+    case 12:
+        var_dump(12);
+        break;
+    case "toto": 
+        var_dump("toto");
+        break;
+    case (int) as $someVar:
+        var_dump($someVar);
+        break;
+    case instanceof Maison(-&amp;gt;voiture =&amp;gt; 1, -&amp;gt;camion =&amp;gt; (int) as $r) as $result:
+        var_dump($result);
+        var_dump($r);
+        break;
+    case instanceof Maison(-&amp;gt;moreVoiture(2) =&amp;gt; 3, -&amp;gt;camion =&amp;gt; instanceof Maison() as $r) as $result:
+        var_dump($result);
+        var_dump($r);
+        break;
+    case [1, 2, (mixed) as $third]:
+        var_dump($third);
+        break;
+    case [...(mixed), (mixed) as $last]: 
+        var_dump($last);
+        break;
+    default:
+        break;
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Explaining of the behaviours involved here:&lt;/p&gt;
+&lt;p&gt;Explaining of the behaviors involved here:&lt;/p&gt;
 
 &lt;ul&gt;
  &lt;li&gt;&lt;code&gt;12&lt;/code&gt;, &lt;code&gt;&amp;ldquo;toto&amp;rdquo;&lt;/code&gt; or any scalar will be check with  &lt;code&gt;===&lt;/code&gt;.&lt;/li&gt;
@@ -121,295 +76,139 @@
 &lt;p&gt;A kind of yacc grammar, terminals are indicated in quotes and r&amp;rsquo;&amp;rsquo; for regex.&lt;/p&gt;
 
 &lt;div class="brush: yacc"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt; 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;pattern:
+ &lt;pre&gt;&lt;code&gt;pattern:
     | scalar as_pattern
     | type as_pattern
-    | &amp;#39;instanceof&amp;#39; classname &amp;#39;(&amp;#39; object_list &amp;#39;)&amp;#39; as_pattern
+    | 'instanceof' classname '(' object_list ')' as_pattern
     | array_pattern as_pattern
     ;
 
 type:
-    | &amp;#39;(bool)&amp;#39;
-    | &amp;#39;(int)&amp;#39;
-    | &amp;#39;(string)&amp;#39;
-    | &amp;#39;(resource)&amp;#39;
-    | &amp;#39;(float)&amp;#39; 
-    | &amp;#39;(array)&amp;#39;
-    | &amp;#39;(object)&amp;#39;
-    | &amp;#39;(mixed)&amp;#39;
+    | '(bool)'
+    | '(int)'
+    | '(string)'
+    | '(resource)'
+    | '(float)' 
+    | '(array)'
+    | '(object)'
+    | '(mixed)'
     ;
 
 scalar:
-    | r&amp;#39;[0-9]+&amp;#39; // integer
-    | r&amp;#39;[0-9]*.[0-9]*&amp;#39; // float
-    | r"&amp;#39;[^&amp;#39;]*&amp;#39;"
-    | r&amp;#39;"[^"]*"&amp;#39; //string
+    | r'[0-9]+' // integer
+    | r'[0-9]*.[0-9]*' // float
+    | r"'[^']*'"
+    | r'"[^"]*"' //string
     | true
     | false
     | null
     ;
 
 array_list:
-    | pattern &amp;#39;,&amp;#39; array_list
+    | pattern ',' array_list
     | pattern
-    | &amp;#39;...&amp;#39; pattern &amp;#39;,&amp;#39; array_list
-    | &amp;#39;...&amp;#39; pattern
+    | '...' pattern ',' array_list
+    | '...' pattern
     |
     ;
 
 array_pattern:
-    | &amp;#39;array&amp;#39; &amp;#39;(&amp;#39; array_list &amp;#39;)&amp;#39;
-    | &amp;#39;[&amp;#39; array_list &amp;#39;]&amp;#39;
-    | &amp;#39;array&amp;#39; &amp;#39;(&amp;#39; array_key_list &amp;#39;)&amp;#39;
-    | &amp;#39;[&amp;#39; array_key_list &amp;#39;]&amp;#39;
+    | 'array' '(' array_list ')'
+    | '[' array_list ']'
+    | 'array' '(' array_key_list ')'
+    | '[' array_key_list ']'
     ;
 
 object_list:
-    | r&amp;#39;-&amp;gt;[a-zA-Z0-9_]+&amp;#39; &amp;#39;=&amp;gt;&amp;#39; pattern
-    | r&amp;#39;-&amp;gt;[a-zA-Z0-9_]+&amp;#39; &amp;#39;(&amp;#39; any_php_expr &amp;#39;)&amp;#39; &amp;#39;=&amp;gt;&amp;#39; pattern
+    | r'-&amp;gt;[a-zA-Z0-9_]+' '=&amp;gt;' pattern
+    | r'-&amp;gt;[a-zA-Z0-9_]+' '(' any_php_expr ')' '=&amp;gt;' pattern
     ;
 
 variable:
-    | r&amp;#39;$[a-zA-z0-9_]+&amp;#39; // like $someVar
+    | r'$[a-zA-z0-9_]+' // like $someVar
     ;
 
 as_pattern:
     | // empty
-    | &amp;#39;as&amp;#39; variable
-    ;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+    | 'as' variable
+    ;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="implementing-a-poc"&gt;Implementing a P.O.C.&lt;/h2&gt;
 
-&lt;p&gt;Like &lt;code&gt;match&lt;/code&gt;, a macro that spit out racket code, i will implement this as a pre-processor that spit out valid PHP. This is not a usable solution because it breaks line number in errors messages. i have started to write this 
- &lt;abbr title="Proof Of Concept"&gt;POC&lt;/abbr&gt; in the PHP VM (to keep correct line number) but the whole process was slow and cumbersome (&lt;a href="/code/poc_vm.patch"&gt;here is the diff&lt;/a&gt; that pave the basics form commit 85b9055a86 [aka PHP 7.1]). The other problem is the generate code rely on 3 globals variables and the whole thing will turn bad if you mess with them inside a match.&lt;/p&gt;
+&lt;p&gt;Like &lt;code&gt;match&lt;/code&gt;, a macro that spit out racket code, I will implement this as a pre-processor that spit out valid PHP. This is not a usable solution because it breaks line number in errors messages. I have started to write this 
+ &lt;abbr title="Proof Of Concept"&gt;POC&lt;/abbr&gt; in the PHP VM (to keep correct line number) but the whole process was slow and cumbersome (&lt;a href="/code/poc_vm.patch"&gt;here is the diff&lt;/a&gt; that pave the basics form commit 85b9055a86 [aka PHP 7.1]). The other problem is that the generated code rely on 3 global variables and the whole thing will turn bad if you mess with them inside a match.&lt;/p&gt;
 
 &lt;p&gt;Some quick glance at how this is done.&lt;/p&gt;
 
 &lt;div class="brush: php"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt;1
-2
-3
-4
-5
-6&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?php&lt;/span&gt;
+ &lt;pre&gt;&lt;code&gt;&amp;lt;?php
 
-&lt;span class="nx"&gt;match&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;expr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="nx"&gt;pattern&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;statements&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt; &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;default&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="c1"&gt;// comme switch&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+match (expr) {
+    case pattern: statements... break;
+    default: // like switch
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Will ouput:&lt;/p&gt;
 
 &lt;div class="brush: php"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt; 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?php&lt;/span&gt;
+ &lt;pre&gt;&lt;code&gt;&amp;lt;?php
 
-&lt;span class="c1"&gt;// If there is a match before every globals variables are re-initialized.&lt;/span&gt;
+// If there is a match before every global variables are re-initialized.
 
-&lt;span class="c1"&gt;// Used to eval expression just once.&lt;/span&gt;
-&lt;span class="nv"&gt;$__MATCH__expr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;expr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="c1"&gt;// Used to store variables and populare (extract) the current scope with them&lt;/span&gt;
-&lt;span class="nx"&gt;only&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="nx"&gt;whole&lt;/span&gt; &lt;span class="nx"&gt;clause&lt;/span&gt; &lt;span class="nx"&gt;match&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
-&lt;span class="nv"&gt;$__MATCH__variables&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[];&lt;/span&gt; &lt;span class="c1"&gt;// of shape &amp;#39;variableName&amp;#39; =&amp;gt; value.&lt;/span&gt;
-&lt;span class="nv"&gt;$__MATCH__result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;true&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+// Used to eval expression just once.
+$__MATCH__expr = expr;
+// Used to store variables and populate (extract) the current scope with them
+only if the whole clause match.
+$__MATCH__variables = []; // of shape 'variableName' =&amp;gt; value.
+$__MATCH__result = true;
 
-&lt;span class="c1"&gt;// Skeleton of any pattern clause.&lt;/span&gt;
-&lt;span class="nv"&gt;$__MATCH__case0&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;function&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$__MATCH__expr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;use&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nv"&gt;$__MATCH__variables&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nv"&gt;$__MATCH__result&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nv"&gt;$__MATCH__inner_variables&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[];&lt;/span&gt;
-    &lt;span class="nv"&gt;$__MATCH__result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;true&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="nx"&gt;pattern_code&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$__MATCH__result&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="k"&gt;true&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="nv"&gt;$__MATCH__variables&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;array_merge&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$__MATCH__variables&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nv"&gt;$__MATCH__inner_variables&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nv"&gt;$__MATCH__result&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
+// Skeleton of any pattern clause.
+$__MATCH__case0 = function ($__MATCH__expr) use (&amp;amp;$__MATCH__variables, &amp;amp;$__MATCH__result) {
+    $__MATCH__inner_variables = [];
+    $__MATCH__result = true;
+    pattern_code;
+    if ($__MATCH__result == true) {
+        $__MATCH__variables = array_merge($__MATCH__variables, $__MATCH__inner_variables);
+    }
+    return $__MATCH__result;
+}
 
-&lt;span class="c1"&gt;// Use switch because match has the same behaviour of switch regarding break.&lt;/span&gt;
-&lt;span class="k"&gt;switch&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;true&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="nv"&gt;$__MATCH__case0&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$__MATCH__expr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
-      &lt;span class="nb"&gt;extract&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$__MATCH__variables&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-      &lt;span class="nx"&gt;statements&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// or not&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+// Use switch because match has the same behavior of switch regarding break.
+switch (true) {
+  case $__MATCH__case0($__MATCH__expr):
+      extract($__MATCH__variables);
+      statements;
+      break; // or not
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Another example:&lt;/p&gt;
 
 &lt;div class="brush: php"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt; 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?php&lt;/span&gt;
+ &lt;pre&gt;&lt;code&gt;&amp;lt;?php
 
-&lt;span class="c1"&gt;// for case (int) as $someVar: var_dump($someVar); break;&lt;/span&gt;
+// for case (int) as $someVar: var_dump($someVar); break;
 
-&lt;span class="nv"&gt;$__MATCH__case2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;function&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$__MATCH__expr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;use&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nv"&gt;$__MATCH__variables&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nv"&gt;$__MATCH__result&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nv"&gt;$__MATCH__inner_variables&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[];&lt;/span&gt;
-    &lt;span class="nv"&gt;$__MATCH__result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;true&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$__MATCH__result&lt;/span&gt; &lt;span class="o"&gt;===&lt;/span&gt; &lt;span class="k"&gt;true&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;is_int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$__MATCH__expr&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="nv"&gt;$__MATCH__inner_variables&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;someVar&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;$__MATCH__expr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="nv"&gt;$__MATCH__result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;false&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt; 
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$__MATCH__result&lt;/span&gt; &lt;span class="o"&gt;===&lt;/span&gt; &lt;span class="k"&gt;true&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="nv"&gt;$__MATCH__variables&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;array_merge&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$__MATCH__variables&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nv"&gt;$__MATCH__inner_variables&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nv"&gt;$__MATCH__result&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
+$__MATCH__case2 = function ($__MATCH__expr) use (&amp;amp;$__MATCH__variables, &amp;amp;$__MATCH__result) {
+    $__MATCH__inner_variables = [];
+    $__MATCH__result = true;
+    if ($__MATCH__result === true) {
+        if (is_int($__MATCH__expr)) {
+            $__MATCH__inner_variables['someVar'] = $__MATCH__expr;
+        } else {
+            $__MATCH__result = false;
+        }
+    } 
+    if ($__MATCH__result === true) {
+        $__MATCH__variables = array_merge($__MATCH__variables, $__MATCH__inner_variables);
+    }
+    return $__MATCH__result;
+}
 
-&lt;span class="c1"&gt;// and in the switch&lt;/span&gt;
+// and in the switch
 
-&lt;span class="c1"&gt;// case $__MATCH__case0($__MATCH__expr):&lt;/span&gt;
-&lt;span class="c1"&gt;//     extract($__MATCH__variables);&lt;/span&gt;
-&lt;span class="c1"&gt;//     var_dump($someVar); break;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+// case $__MATCH__case0($__MATCH__expr):
+//     extract($__MATCH__variables);
+//     var_dump($someVar); break;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;I don&amp;rsquo;t go into other examples you get the idea, see &lt;a href="/code/matchphp.rkt"&gt;the preprocessor&lt;/a&gt; or &lt;a href="/code/matchphpexample.php"&gt;an example&lt;/a&gt; and &lt;a href="/code/matchphpexample_output.php"&gt;its output&lt;/a&gt; for more.&lt;/p&gt;
 
@@ -420,64 +219,30 @@ as_pattern:
 &lt;h3 id="there-is-no-array-key"&gt;There is no array key&lt;/h3&gt;
 
 &lt;div class="brush: yacc"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt; 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;string_or_number:
-    | r&amp;#39;[0-9]+&amp;#39; // integer
-    | r&amp;#39;[0-9]*.[0-9]*&amp;#39; // float
-    | r"&amp;#39;[^&amp;#39;]*&amp;#39;"
-    | r&amp;#39;"[^"]*"&amp;#39; //string
+ &lt;pre&gt;&lt;code&gt;string_or_number:
+    | r'[0-9]+' // integer
+    | r'[0-9]*.[0-9]*' // float
+    | r"'[^']*'"
+    | r'"[^"]*"' //string
     ;
     
 string_or_number_type:
-    | &amp;#39;(int)&amp;#39;
-    | &amp;#39;(string)&amp;#39;
-    | &amp;#39;(mixed)&amp;#39;
+    | '(int)'
+    | '(string)'
+    | '(mixed)'
     ;
 
 array_list:
-    | pattern &amp;#39;,&amp;#39; array_list
+    | pattern ',' array_list
     | pattern
-    | &amp;#39;...&amp;#39; pattern &amp;#39;,&amp;#39; array_list
-    | &amp;#39;...&amp;#39; pattern
-    | string_or_number =&amp;gt; pattern &amp;#39;,&amp;#39; array_list
+    | '...' pattern ',' array_list
+    | '...' pattern
+    | string_or_number =&amp;gt; pattern ',' array_list
     | string_or_number =&amp;gt; pattern
-    | &amp;#39;...&amp;#39; string_or_number_type =&amp;gt; pattern &amp;#39;,&amp;#39; array_list
-    | &amp;#39;...&amp;#39; string_or_number_type =&amp;gt; pattern
+    | '...' string_or_number_type =&amp;gt; pattern ',' array_list
+    | '...' string_or_number_type =&amp;gt; pattern
     |
-    ;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+    ;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h3 id="only-scalar-allowed"&gt;Only Scalar allowed&lt;/h3&gt;
 
@@ -488,10 +253,10 @@ array_list:
 &lt;ul&gt;
  &lt;li&gt;Adding a new keyword like &lt;code&gt;&amp;amp;&amp;amp;&amp;amp;&lt;/code&gt;.&lt;/li&gt;
  &lt;li&gt;Removing expression all together.&lt;/li&gt;
- &lt;li&gt;Removing and and not all together.&lt;/li&gt;
+ &lt;li&gt;Removing and not all together.&lt;/li&gt;
  &lt;li&gt;Escape expression with something like &lt;code&gt;eval&lt;/code&gt; example &lt;code&gt;case eval(1 + 1) &amp;amp;&amp;amp; eval($obj-&amp;gt;getStuff()):&lt;/code&gt;.&lt;/li&gt;&lt;/ul&gt;
 
-&lt;p&gt;I will bet on now for removing and and not.&lt;/p&gt;
+&lt;p&gt;I will bet on now for removing and not.&lt;/p&gt;
 
 &lt;h3 id="traversable-and-object-behaving-as-array"&gt;Traversable and object behaving as array&lt;/h3&gt;
 
@@ -502,232 +267,60 @@ array_list:
 &lt;p&gt;For &lt;code&gt;?&lt;/code&gt; it is possible to add a guard:&lt;/p&gt;
 
 &lt;div class="brush: php"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt;1
-2
-3
-4
-5
-6
-7
-8
-9&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?php&lt;/span&gt;
+ &lt;pre&gt;&lt;code&gt;&amp;lt;?php
 
-&lt;span class="c1"&gt;// case (mixed) as $pattern if (is_something($pattern)):&lt;/span&gt;
+// case (mixed) as $pattern if (is_something($pattern)):
 
-&lt;span class="c1"&gt;// $pattern is implicit&lt;/span&gt;
-&lt;span class="c1"&gt;// case (mixed) if (is_something($pattern)):&lt;/span&gt;
+// $pattern is implicit
+// case (mixed) if (is_something($pattern)):
 
-&lt;span class="c1"&gt;// even (mixed) could be implicit&lt;/span&gt;
-&lt;span class="c1"&gt;// case if (is_something($pattern)):&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+// even (mixed) could be implicit
+// case if (is_something($pattern)):&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Go a bit deeper into implicit &lt;code&gt;$pattern&lt;/code&gt;&lt;/p&gt;
 
 &lt;div class="brush: php"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt; 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?php&lt;/span&gt;
+ &lt;pre&gt;&lt;code&gt;&amp;lt;?php
 
-&lt;span class="nx"&gt;match&lt;/span&gt; &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="nx"&gt;mixed&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;var_dump&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$pattern&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="k"&gt;true&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;var_dump&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$pattern&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="k"&gt;true&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
+match ([1]) {
+    case [(mixed) if (var_dump($pattern) || true)] if (var_dump($pattern) || true):
+}
 
-&lt;span class="c1"&gt;// will print&lt;/span&gt;
-&lt;span class="c1"&gt;// 1&lt;/span&gt;
-&lt;span class="c1"&gt;// array(1)&lt;/span&gt;
+// will print
+// 1
+// array(1)
 
-&lt;span class="c1"&gt;// $pattern is the current part being matched.&lt;/span&gt;
+// $pattern is the current part being matched.
 
-&lt;span class="c1"&gt;// Ifs are executed depth first search.&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+// Ifs are executed depth first search.&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;For the &lt;code&gt;app&lt;/code&gt; parts:&lt;/p&gt;
 
 &lt;div class="brush: php"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt; 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="x"&gt;// will match [1, &amp;#39;stuff&amp;#39;]&lt;/span&gt;
-&lt;span class="x"&gt;// the next pattern is the return value of evaluated expression.&lt;/span&gt;
-&lt;span class="x"&gt;// case [1, eval(preg*match(&amp;#39;/stuff/&amp;#39;, $pattern, $m)) =&amp;gt; 1]:&lt;/span&gt;
+ &lt;pre&gt;&lt;code&gt;// will match [1, 'stuff']
+// the next pattern is the return value of evaluated expression.
+// case [1, eval(preg*match('/stuff/', $pattern, $m)) =&amp;gt; 1]:
 
-&lt;span class="x"&gt;// will match [1, &amp;#39;stu&amp;#39;] but not [1, &amp;#39;stuff&amp;#39;]&lt;/span&gt;
-&lt;span class="x"&gt;// case [1, eval(preg*match(&amp;#39;/stu(ff)?/&amp;#39;, $pattern, $m)) use($m) =&amp;gt; [(mixed)]]:&lt;/span&gt;
-&lt;span class="x"&gt;// use($m) subsitute $pattern value with $m&amp;#39;s value.&lt;/span&gt;
+// will match [1, 'stu'] but not [1, 'stuff']
+// case [1, eval(preg*match('/stu(ff)?/', $pattern, $m)) use($m) =&amp;gt; [(mixed)]]:
+// use($m) substitute $pattern value with $m's value.
 
-&lt;span class="x"&gt;// If a callable is given to eval so it is called&lt;/span&gt;
-&lt;span class="x"&gt;// case [1, eval(function ($pattern) { preg_match(&amp;#39;/stu(ff)?/&amp;#39;, $pattern, $m); return $m; }) =&amp;gt; [(mixed)]]:&lt;/span&gt;
+// If a callable is given to eval so it is called
+// case [1, eval(function ($pattern) { preg_match('/stu(ff)?/', $pattern, $m); return $m; }) =&amp;gt; [(mixed)]]:
 
-&lt;span class="x"&gt;// because the syntax with eval could be confusing with a php expression and&lt;/span&gt;
-&lt;span class="x"&gt;// it need to add &amp;#39;use&amp;#39;, another solution is to only allow the function syntax.&lt;/span&gt;
+// because the syntax with eval could be confusing with a php expression and
+// it need to add 'use', another solution is to only allow the function syntax.
 
-&lt;span class="x"&gt;// case [1, function ($pattern) { preg_match(&amp;#39;/stu(ff)?/&amp;#39;, $pattern, $m); return $m; } =&amp;gt; [(mixed)]]:&lt;/span&gt;
+// case [1, function ($pattern) { preg_match('/stu(ff)?/', $pattern, $m); return $m; } =&amp;gt; [(mixed)]]:
 
-&lt;span class="x"&gt;// verbose but the clearer for me.&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+// verbose but the clearer for me.&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h3 id="conclusion-with-whole-hypothetical-grammar"&gt;Conclusion with whole hypothetical grammar&lt;/h3&gt;
 
-&lt;p&gt;Regarding previous point here is a grammar that sum it up (contrary to the previous one i didn&amp;rsquo;t check if it didn&amp;rsquo;t run into LLAR conflicts).&lt;/p&gt;
+&lt;p&gt;Regarding previous point here is a grammar that sum it up (contrary to the previous one I didn&amp;rsquo;t check if it didn&amp;rsquo;t run into LLAR conflicts).&lt;/p&gt;
 
 &lt;div class="brush: yacc"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt; 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;pattern:
+ &lt;pre&gt;&lt;code&gt;pattern:
     | apply_pattern pattern_without_apply
     | pattern_without_apply
     ;
@@ -735,69 +328,69 @@ array_list:
 pattern_without_apply:
     | scalar as_pattern if_pattern
     | type as_pattern if_pattern
-    | &amp;#39;instanceof&amp;#39; &amp;#39;Traversable&amp;#39; &amp;#39;(&amp;#39; array_list &amp;#39;)&amp;#39; as_pattern if_pattern
-    | &amp;#39;instanceof&amp;#39; classname &amp;#39;(&amp;#39; object_list &amp;#39;)&amp;#39; as_pattern if_pattern
+    | 'instanceof' 'Traversable' '(' array_list ')' as_pattern if_pattern
+    | 'instanceof' classname '(' object_list ')' as_pattern if_pattern
     | array_pattern as_pattern if_pattern
-    | php_expr as_pattern if_pattern // hope it doesn&amp;#39;t conflict with the rest, array() for exemple
+    | php_expr as_pattern if_pattern // hope it doesn't conflict with the rest, array() for exemple
     ;
 
 type:
-    | &amp;#39;(bool)&amp;#39;
-    | &amp;#39;(int)&amp;#39;
-    | &amp;#39;(string)&amp;#39;
-    | &amp;#39;(resource)&amp;#39;
-    | &amp;#39;(float)&amp;#39; 
-    | &amp;#39;(array)&amp;#39;
-    | &amp;#39;(object)&amp;#39;
-    | &amp;#39;(mixed)&amp;#39;
+    | '(bool)'
+    | '(int)'
+    | '(string)'
+    | '(resource)'
+    | '(float)' 
+    | '(array)'
+    | '(object)'
+    | '(mixed)'
     ;
 
 scalar:
-    | r&amp;#39;[0-9]+&amp;#39; // integer
-    | r&amp;#39;[0-9]*.[0-9]*&amp;#39; // float
-    | r"&amp;#39;[^&amp;#39;]*&amp;#39;"
-    | r&amp;#39;"[^"]*"&amp;#39; //string
+    | r'[0-9]+' // integer
+    | r'[0-9]*.[0-9]*' // float
+    | r"'[^']*'"
+    | r'"[^"]*"' //string
     | true
     | false
     | null
     ;
 
 array_list:
-    | pattern &amp;#39;,&amp;#39; array_list
+    | pattern ',' array_list
     | pattern
-    | &amp;#39;...&amp;#39; pattern &amp;#39;,&amp;#39; array_list
-    | &amp;#39;...&amp;#39; pattern
+    | '...' pattern ',' array_list
+    | '...' pattern
     |
     ;
 
 array_pattern:
-    | &amp;#39;array&amp;#39; &amp;#39;(&amp;#39; array_list &amp;#39;)&amp;#39;
-    | &amp;#39;[&amp;#39; array_list &amp;#39;]&amp;#39;
-    | &amp;#39;array&amp;#39; &amp;#39;(&amp;#39; array_key_list &amp;#39;)&amp;#39;
-    | &amp;#39;[&amp;#39; array_key_list &amp;#39;]&amp;#39;
+    | 'array' '(' array_list ')'
+    | '[' array_list ']'
+    | 'array' '(' array_key_list ')'
+    | '[' array_key_list ']'
     ;
 
 object_list:
-    | r&amp;#39;-&amp;gt;[a-zA-Z0-9_]+&amp;#39; &amp;#39;=&amp;gt;&amp;#39; pattern
-    | r&amp;#39;-&amp;gt;[a-zA-Z0-9_]+&amp;#39; &amp;#39;(&amp;#39; any_php_expr &amp;#39;)&amp;#39; &amp;#39;=&amp;gt;&amp;#39; pattern
+    | r'-&amp;gt;[a-zA-Z0-9_]+' '=&amp;gt;' pattern
+    | r'-&amp;gt;[a-zA-Z0-9_]+' '(' any_php_expr ')' '=&amp;gt;' pattern
     ;
 
 variable:
-    | r&amp;#39;$[a-zA-z0-9_]+&amp;#39; // like $someVar
+    | r'$[a-zA-z0-9_]+' // like $someVar
     ;
 
 as_pattern:
     | // empty
-    | &amp;#39;as&amp;#39; variable
+    | 'as' variable
     ;
     
 if_pattern:
     | // empty
-    | &amp;#39;if&amp;#39; &amp;#39;(&amp;#39; php_expr &amp;#39;)&amp;#39;
+    | 'if' '(' php_expr ')'
     ;
 
 apply_pattern:
-    | &amp;#39;function&amp;#39; &amp;#39;(&amp;#39; variable &amp;#39;)&amp;#39; &amp;#39;use&amp;#39; &amp;#39;(&amp;#39; stuff &amp;#39;)&amp;#39; &amp;#39;{&amp;#39; statements &amp;#39;}&amp;#39; &amp;#39;=&amp;gt;&amp;#39;
+    | 'function' '(' variable ')' 'use' '(' stuff ')' '{' statements '}' '=&amp;gt;'
     ;
 
 array_key:
@@ -806,147 +399,30 @@ array_key:
     ;
 
 array_key_ellipsis:
-    | &amp;#39;(int)&amp;#39; as_pattern if_pattern 
-    | &amp;#39;(string)&amp;#39; as_pattern if_pattern
-    | &amp;#39;(mixed)&amp;#39; as_pattern if_pattern
+    | '(int)' as_pattern if_pattern 
+    | '(string)' as_pattern if_pattern
+    | '(mixed)' as_pattern if_pattern
     | apply_pattern pattern_without_apply
     ;
 
 array_list:
-    | pattern &amp;#39;,&amp;#39; array_list
+    | pattern ',' array_list
     | pattern
-    | &amp;#39;...&amp;#39; pattern &amp;#39;,&amp;#39; array_list
-    | &amp;#39;...&amp;#39; pattern
-    | array_key =&amp;gt; pattern &amp;#39;,&amp;#39; array_list
+    | '...' pattern ',' array_list
+    | '...' pattern
+    | array_key =&amp;gt; pattern ',' array_list
     | array_key =&amp;gt; pattern
-    | &amp;#39;...&amp;#39; array_key_ellipsis =&amp;gt; pattern &amp;#39;,&amp;#39; array_list
-    | &amp;#39;...&amp;#39; array_key_ellipsis =&amp;gt; pattern
+    | '...' array_key_ellipsis =&amp;gt; pattern ',' array_list
+    | '...' array_key_ellipsis =&amp;gt; pattern
     |
-    ;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+    ;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;It add most of the feature from racket&amp;rsquo;s &lt;code&gt;match&lt;/code&gt; without adding any new keyword. The missing element are &lt;code&gt;and&lt;/code&gt;, &lt;code&gt;not&lt;/code&gt;, &lt;code&gt;regexp&lt;/code&gt; (very easy to add with a new keyword like &lt;code&gt;&amp;lsquo;preg_match&amp;rsquo; &amp;rsquo;/regex/&amp;rsquo; &amp;rsquo;=&amp;gt;&amp;rsquo; pattern&lt;/code&gt;) and &lt;code&gt;..k&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;It adds most of the feature from racket&amp;rsquo;s &lt;code&gt;match&lt;/code&gt; without adding any new keyword. The missing element are &lt;code&gt;and&lt;/code&gt;, &lt;code&gt;not&lt;/code&gt;, &lt;code&gt;regexp&lt;/code&gt; (very easy to add with a new keyword like &lt;code&gt;&amp;lsquo;preg_match&amp;rsquo; &amp;rsquo;/regex/&amp;rsquo; &amp;rsquo;=&amp;gt;&amp;rsquo; pattern&lt;/code&gt;) and &lt;code&gt;..k&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h4 id="the-whole-grammar-if-phpexpr-is-removed-from-allowed-pattern"&gt;The whole grammar if php_expr is removed from allowed pattern&lt;/h4&gt;
 
 &lt;div class="brush: yacc"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt;  1
-  2
-  3
-  4
-  5
-  6
-  7
-  8
-  9
- 10
- 11
- 12
- 13
- 14
- 15
- 16
- 17
- 18
- 19
- 20
- 21
- 22
- 23
- 24
- 25
- 26
- 27
- 28
- 29
- 30
- 31
- 32
- 33
- 34
- 35
- 36
- 37
- 38
- 39
- 40
- 41
- 42
- 43
- 44
- 45
- 46
- 47
- 48
- 49
- 50
- 51
- 52
- 53
- 54
- 55
- 56
- 57
- 58
- 59
- 60
- 61
- 62
- 63
- 64
- 65
- 66
- 67
- 68
- 69
- 70
- 71
- 72
- 73
- 74
- 75
- 76
- 77
- 78
- 79
- 80
- 81
- 82
- 83
- 84
- 85
- 86
- 87
- 88
- 89
- 90
- 91
- 92
- 93
- 94
- 95
- 96
- 97
- 98
- 99
-100
-101
-102
-103
-104
-105
-106
-107&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;pattern:
+ &lt;pre&gt;&lt;code&gt;pattern:
     | apply_pattern pattern_without_apply
     | pattern_without_apply
     ;
@@ -955,79 +431,79 @@ just_pattern:
     | variable
     | scalar 
     | type 
-    | &amp;#39;instanceof&amp;#39; &amp;#39;Traversable&amp;#39; &amp;#39;(&amp;#39; array_list &amp;#39;)&amp;#39;
-    | &amp;#39;instanceof&amp;#39; classname &amp;#39;(&amp;#39; object_list &amp;#39;)&amp;#39;
+    | 'instanceof' 'Traversable' '(' array_list ')'
+    | 'instanceof' classname '(' object_list ')'
     | array_pattern
     ;
     
 pattern_without_apply:
     | just_pattern scalar as_pattern if_pattern
-    | pattern &amp;#39;&amp;amp;&amp;amp;&amp;#39; pattern
-    | pattern &amp;#39;||&amp;#39; pattern 
-    | &amp;#39;(&amp;#39; pattern &amp;#39;)&amp;#39; as_pattern if_pattern // resolve ambiguity with as_pattern with &amp;#39;||&amp;#39; and &amp;#39;&amp;amp;&amp;amp;&amp;#39; rule.
-    | pattern &amp;#39;and&amp;#39; just_pattern as_pattern if_pattern
-    | pattern &amp;#39;or&amp;#39; just_pattern as_pattern if_pattern
-    | &amp;#39;!&amp;#39; pattern
+    | pattern '&amp;amp;&amp;amp;' pattern
+    | pattern '||' pattern 
+    | '(' pattern ')' as_pattern if_pattern // resolve ambiguity with as_pattern with '||' and '&amp;amp;&amp;amp;' rule.
+    | pattern 'and' just_pattern as_pattern if_pattern
+    | pattern 'or' just_pattern as_pattern if_pattern
+    | '!' pattern
     ;
 
 type:
-    | &amp;#39;(bool)&amp;#39;
-    | &amp;#39;(int)&amp;#39;
-    | &amp;#39;(string)&amp;#39;
-    | &amp;#39;(resource)&amp;#39;
-    | &amp;#39;(float)&amp;#39; 
-    | &amp;#39;(array)&amp;#39;
-    | &amp;#39;(object)&amp;#39;
-    | &amp;#39;(mixed)&amp;#39;
+    | '(bool)'
+    | '(int)'
+    | '(string)'
+    | '(resource)'
+    | '(float)' 
+    | '(array)'
+    | '(object)'
+    | '(mixed)'
     ;
 
 scalar:
-    | &amp;#39;==&amp;#39; scalar // weak checking instead of strong one by default
-    | r&amp;#39;[0-9]+&amp;#39; // integer
-    | r&amp;#39;[0-9]*.[0-9]*&amp;#39; // float
-    | r"&amp;#39;[^&amp;#39;]*&amp;#39;"
-    | r&amp;#39;"[^"]*"&amp;#39; //string
+    | '==' scalar // weak checking instead of strong one by default
+    | r'[0-9]+' // integer
+    | r'[0-9]*.[0-9]*' // float
+    | r"'[^']*'"
+    | r'"[^"]*"' //string
     | true
     | false
     | null
     ;
 
 array_list:
-    | pattern &amp;#39;,&amp;#39; array_list
+    | pattern ',' array_list
     | pattern
-    | &amp;#39;...&amp;#39; pattern &amp;#39;,&amp;#39; array_list
-    | &amp;#39;...&amp;#39; pattern
+    | '...' pattern ',' array_list
+    | '...' pattern
     |
     ;
 
 array_pattern:
-    | &amp;#39;array&amp;#39; &amp;#39;(&amp;#39; array_list &amp;#39;)&amp;#39;
-    | &amp;#39;[&amp;#39; array_list &amp;#39;]&amp;#39;
-    | &amp;#39;array&amp;#39; &amp;#39;(&amp;#39; array_key_list &amp;#39;)&amp;#39;
-    | &amp;#39;[&amp;#39; array_key_list &amp;#39;]&amp;#39;
+    | 'array' '(' array_list ')'
+    | '[' array_list ']'
+    | 'array' '(' array_key_list ')'
+    | '[' array_key_list ']'
     ;
 
 object_list:
-    | r&amp;#39;-&amp;gt;[a-zA-Z0-9_]+&amp;#39; &amp;#39;=&amp;gt;&amp;#39; pattern
-    | r&amp;#39;-&amp;gt;[a-zA-Z0-9_]+&amp;#39; &amp;#39;(&amp;#39; any_php_expr &amp;#39;)&amp;#39; &amp;#39;=&amp;gt;&amp;#39; pattern
+    | r'-&amp;gt;[a-zA-Z0-9_]+' '=&amp;gt;' pattern
+    | r'-&amp;gt;[a-zA-Z0-9_]+' '(' any_php_expr ')' '=&amp;gt;' pattern
     ;
 
 variable:
-    | r&amp;#39;$[a-zA-z0-9_]+&amp;#39; // like $someVar
+    | r'$[a-zA-z0-9_]+' // like $someVar
     ;
 
 as_pattern:
     | // empty
-    | &amp;#39;as&amp;#39; variable
+    | 'as' variable
     ;
     
 if_pattern:
     | // empty
-    | &amp;#39;if&amp;#39; &amp;#39;(&amp;#39; php_expr &amp;#39;)&amp;#39;
+    | 'if' '(' php_expr ')'
     ;
 
 apply_pattern:
-    | &amp;#39;function&amp;#39; &amp;#39;(&amp;#39; variable &amp;#39;)&amp;#39; &amp;#39;use&amp;#39; &amp;#39;(&amp;#39; stuff &amp;#39;)&amp;#39; &amp;#39;{&amp;#39; statements &amp;#39;}&amp;#39; &amp;#39;=&amp;gt;&amp;#39;
+    | 'function' '(' variable ')' 'use' '(' stuff ')' '{' statements '}' '=&amp;gt;'
     ;
 
 array_key:
@@ -1036,34 +512,32 @@ array_key:
     ;
 
 array_key_ellipsis:
-    | &amp;#39;(int)&amp;#39; as_pattern if_pattern 
-    | &amp;#39;(string)&amp;#39; as_pattern if_pattern
-    | &amp;#39;(mixed)&amp;#39; as_pattern if_pattern
+    | '(int)' as_pattern if_pattern 
+    | '(string)' as_pattern if_pattern
+    | '(mixed)' as_pattern if_pattern
     | apply_pattern pattern_without_apply
     ;
 
 array_list:
-    | pattern &amp;#39;,&amp;#39; array_list
+    | pattern ',' array_list
     | pattern
-    | &amp;#39;...&amp;#39; pattern &amp;#39;,&amp;#39; array_list
-    | &amp;#39;...&amp;#39; pattern
-    | array_key =&amp;gt; pattern &amp;#39;,&amp;#39; array_list
+    | '...' pattern ',' array_list
+    | '...' pattern
+    | array_key =&amp;gt; pattern ',' array_list
     | array_key =&amp;gt; pattern
-    | &amp;#39;...&amp;#39; array_key_ellipsis =&amp;gt; pattern &amp;#39;,&amp;#39; array_list
-    | &amp;#39;...&amp;#39; array_key_ellipsis =&amp;gt; pattern
+    | '...' array_key_ellipsis =&amp;gt; pattern ',' array_list
+    | '...' array_key_ellipsis =&amp;gt; pattern
     |
-    ;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+    ;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;This one allow weak checking, negating pattern, and of pattern and &lt;code&gt;$var&lt;/code&gt; as a shortcut for &lt;code&gt;(mixed) as $var&lt;/code&gt;.&lt;/p&gt;&lt;/html&gt;</description></item>
+&lt;p&gt;This one allow weak checking, negating pattern, and of pattern and &lt;code&gt;$var&lt;/code&gt; as a shortcut for &lt;code&gt;(mixed) as $var&lt;/code&gt;.&lt;/p&gt;</description></item>
   <item>
    <title>exploring typecheking sql query in typed/racket</title>
    <link>http://antoineB.github.io/blog/2016/01/09/exploring-typecheking-sql-query-in-typed-racket/?utm_source=racket&amp;utm_medium=RSS</link>
-   <guid>urn:http-antoineB-github-io:-blog-2016-01-09-exploring-typecheking-sql-query-in-typed-racket</guid>
+   <guid isPermaLink="false">urn:http-antoineB-github-io:-blog-2016-01-09-exploring-typecheking-sql-query-in-typed-racket</guid>
    <pubDate>Sat, 09 Jan 2016 17:48:19 UT</pubDate>
-   <description>&lt;html&gt;
+   <author>antoine</author>
+   <description>
 &lt;p class="lead"&gt;This post will describe a 
  &lt;abbr title="Proof Of Concept"&gt;POC&lt;/abbr&gt; on how to typecheck sql query in typed/racket.&lt;/p&gt;
 
@@ -1072,64 +546,29 @@ array_list:
 &lt;p&gt;The goal is to make this typecheck:&lt;/p&gt;
 
 &lt;div class="brush: racket"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt;1
-2
-3
-4
-5
-6
-7&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;:&lt;/span&gt; &lt;span class="n"&gt;some-query&lt;/span&gt; &lt;span class="n"&gt;:&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Listof&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Vector&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;some-query&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt;
-   &lt;span class="n"&gt;movies&lt;/span&gt;
-   &lt;span class="kd"&gt;#:from&lt;/span&gt;     &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;actor&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;movie&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-   &lt;span class="kd"&gt;#:where&lt;/span&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a.name&lt;/span&gt; &lt;span class="s2"&gt;"Jhon Wayne"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-   &lt;span class="kd"&gt;#:select&lt;/span&gt;   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a.name&lt;/span&gt; &lt;span class="n"&gt;m.name&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+ &lt;pre&gt;&lt;code&gt;(: some-query : (Listof (Vector String String)))
+(define some-query
+  (query
+   movies
+   #:from     ([actor a] [movie m])
+   #:where    (= a.name "Jhon Wayne")
+   #:select   (a.name m.name)))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;With the schema defined as:&lt;/p&gt;
 
 &lt;div class="brush: racket"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt;1
-2
-3
-4
-5
-6
-7
-8&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;define-schema&lt;/span&gt; &lt;span class="n"&gt;movies&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;actor&lt;/span&gt;    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="n"&gt;Integer&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-            &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;movie&lt;/span&gt;    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="n"&gt;Integer&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-            &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-            &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;director_id&lt;/span&gt; &lt;span class="n"&gt;Integer&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;director&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="n"&gt;Integer&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-            &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+ &lt;pre&gt;&lt;code&gt;(define-schema movies
+  (actor    [id Integer]
+            [name String])
+  (movie    [id Integer]
+            [name String]
+            [director_id Integer])
+  (director [id Integer]
+            [name String]))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;!-- more--&gt;
 
 &lt;p&gt;This 
- &lt;abbr title="Proof Of Concept"&gt;POC&lt;/abbr&gt; already take me too much time so there will be short coming the full source code is available &lt;a href="/code/typed-db.rkt"&gt;here&lt;/a&gt; and its &lt;a href="/code/typed-db-example.rkt"&gt;example&lt;/a&gt;.&lt;/p&gt;
+ &lt;abbr title="Proof Of Concept"&gt;POC&lt;/abbr&gt; already take me too much time so there will be shortcomings the full source code is available &lt;a href="/code/typed-db.rkt"&gt;here&lt;/a&gt; and its &lt;a href="/code/typed-db-example.rkt"&gt;example&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2 id="the-define-schema-macro"&gt;The define-schema macro&lt;/h2&gt;
 
@@ -1138,154 +577,73 @@ array_list:
 &lt;p&gt;The code isn&amp;rsquo;t worth commenting the expanded code will be:&lt;/p&gt;
 
 &lt;div class="brush: racket"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt; 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define-syntax&lt;/span&gt; &lt;span class="n"&gt;movies&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;schema-st&lt;/span&gt; 
-   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt; 
-    &lt;span class="o"&gt;'&lt;/span&gt;&lt;span class="ss"&gt;movies&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;quote-syntax&lt;/span&gt;
-     &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;actor&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="n"&gt;Integer&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;movie&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="n"&gt;Integer&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;director_id&lt;/span&gt; &lt;span class="n"&gt;Integer&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;director&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="n"&gt;Integer&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;))))))))&lt;/span&gt;
+ &lt;pre&gt;&lt;code&gt;(define-syntax movies
+  (schema-st 
+   (list 
+    'movies
+    (quote-syntax
+     ((actor ((id Integer) (name String)))
+      (movie ((id Integer) (name String) (director_id Integer)))
+      (director ((id Integer) (name String))))))))
       
-&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define-for-syntax&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="n"&gt;schema-st&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;#:property&lt;/span&gt; &lt;span class="nb"&gt;prop:procedure&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;st&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;schema-st-data&lt;/span&gt; &lt;span class="n"&gt;st&lt;/span&gt;&lt;span class="p"&gt;))))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+(define-for-syntax (struct schema-st (data) #:property prop:procedure (lambda (st) (schema-st-data st))))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;This is completely straight forward it define a &lt;code&gt;movie&lt;/code&gt; transformer that retains data available for other macros.&lt;/p&gt;
+&lt;p&gt;This is completely straight forward it defines a &lt;code&gt;movie&lt;/code&gt; transformer that retains data available for other macros.&lt;/p&gt;
 
-&lt;p&gt;For short coming reasons it&amp;rsquo;s unclear if using the struct schema is necessary or if &lt;code&gt;(define-syntax movies (list &amp;hellip;))&lt;/code&gt; would have done the trick.&lt;/p&gt;
+&lt;p&gt;For shortcoming reasons it&amp;rsquo;s unclear if using the struct schema is necessary or if &lt;code&gt;(define-syntax movies (list &amp;hellip;))&lt;/code&gt; would have done the trick.&lt;/p&gt;
 
-&lt;p&gt;Also the data structure shouldn&amp;rsquo;t have be a complete syntax object of the whole schema information but just a syntax object of the types, like:&lt;/p&gt;
+&lt;p&gt;Also, the data structure shouldn&amp;rsquo;t have been a complete syntax object of the whole schema information but just a syntax object of the types, like:&lt;/p&gt;
 
 &lt;div class="brush: racket"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt;1
-2
-3
-4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="o"&gt;`&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;movies&lt;/span&gt;
-  &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="ss"&gt;actor&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="ss"&gt;id&lt;/span&gt; &lt;span class="o"&gt;,#'&lt;/span&gt;&lt;span class="n"&gt;Integer&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;name&lt;/span&gt; &lt;span class="o"&gt;,#'&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;movie&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="ss"&gt;id&lt;/span&gt; &lt;span class="o"&gt;,#'&lt;/span&gt;&lt;span class="n"&gt;Integer&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;name&lt;/span&gt; &lt;span class="o"&gt;,#'&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;director_id&lt;/span&gt; &lt;span class="o"&gt;,#'&lt;/span&gt;&lt;span class="n"&gt;Integer&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;director&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="ss"&gt;id&lt;/span&gt; &lt;span class="o"&gt;,#',#'&lt;/span&gt;&lt;span class="n"&gt;Integer&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;name&lt;/span&gt; &lt;span class="o"&gt;,#'&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;)))))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+ &lt;pre&gt;&lt;code&gt;`(movies
+  ((actor ((id ,#'Integer) (name ,#'String)))
+   (movie ((id ,#'Integer) (name ,#'String) (director_id ,#'Integer)))
+   (director ((id ,#',#'Integer) (name ,#'String)))))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;And it also could output type alias to have abstract type:&lt;/p&gt;
 
 &lt;div class="brush: racket"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt;1
-2
-3
-4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;define-type&lt;/span&gt; &lt;span class="n"&gt;movies.actor.id&lt;/span&gt; &lt;span class="n"&gt;Integer&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;define-type&lt;/span&gt; &lt;span class="n"&gt;movies.actor.name&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;define-type&lt;/span&gt; &lt;span class="n"&gt;movies.movie.id&lt;/span&gt; &lt;span class="n"&gt;Integer&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="c1"&gt;;;...&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+ &lt;pre&gt;&lt;code&gt;(define-type movies.actor.id Integer)
+(define-type movies.actor.name String)
+(define-type movies.movie.id Integer)
+;;...&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="the-query-macro"&gt;The query macro&lt;/h2&gt;
 
 &lt;p&gt;Copied the example here to refresh your mind.&lt;/p&gt;
 
 &lt;div class="brush: racket"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt;1
-2
-3
-4
-5
-6
-7&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;:&lt;/span&gt; &lt;span class="n"&gt;some-query&lt;/span&gt; &lt;span class="n"&gt;:&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Listof&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Vector&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;some-query&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt;
-   &lt;span class="n"&gt;movies&lt;/span&gt;
-   &lt;span class="kd"&gt;#:from&lt;/span&gt;     &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;actor&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;movie&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-   &lt;span class="kd"&gt;#:where&lt;/span&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a.name&lt;/span&gt; &lt;span class="s2"&gt;"Jhon Wayne"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-   &lt;span class="kd"&gt;#:select&lt;/span&gt;   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a.name&lt;/span&gt; &lt;span class="n"&gt;m.name&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+ &lt;pre&gt;&lt;code&gt;(: some-query : (Listof (Vector String String)))
+(define some-query
+  (query
+   movies
+   #:from     ([actor a] [movie m])
+   #:where    (= a.name "Jhon Wayne")
+   #:select   (a.name m.name)))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;This one take the definition by whatever you have named it, &lt;code&gt;movies&lt;/code&gt; in this case. It will fetch the schema definition thought &lt;code&gt;syntax-local-value&lt;/code&gt; so you have to pass the &lt;code&gt;movies&lt;/code&gt; every time you use the &lt;code&gt;query&lt;/code&gt; macro.&lt;/p&gt;
 
-&lt;p&gt;As you would expect this macro check that &lt;code&gt;#:from&lt;/code&gt; and &lt;code&gt;#:select&lt;/code&gt; are present only once, bark if an alias isn&amp;rsquo;t defined for each tables, for select and where it check the columns &lt;code&gt;name&lt;/code&gt; are present in table &lt;code&gt;actor&lt;/code&gt; and &lt;code&gt;movie&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;As you would expect this macro check that &lt;code&gt;#:from&lt;/code&gt; and &lt;code&gt;#:select&lt;/code&gt; are present only once, bark if an alias isn&amp;rsquo;t defined for each table, for select and where it checks the columns &lt;code&gt;name&lt;/code&gt; are present in table &lt;code&gt;actor&lt;/code&gt; and &lt;code&gt;movie&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;The expanded code isn&amp;rsquo;t even usefull just to ensure the typecheking mechanism works.&lt;/p&gt;
+&lt;p&gt;The expanded code isn&amp;rsquo;t even useful just to ensure the typecheking mechanism works.&lt;/p&gt;
 
 &lt;p&gt;The two interesting parts are:&lt;/p&gt;
 
 &lt;ul&gt;
  &lt;li&gt;
-  &lt;p&gt;It use &lt;code&gt;ann&lt;/code&gt; on the where expression to ensure it have the type of  &lt;code&gt;a.name&lt;/code&gt; so it give &lt;code&gt;(ann &amp;ldquo;Jhon Wayne&amp;rdquo; String)&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+  &lt;p&gt;It uses &lt;code&gt;ann&lt;/code&gt; on the where expression to ensure it has the type of  &lt;code&gt;a.name&lt;/code&gt; so it gives &lt;code&gt;(ann &amp;ldquo;Jhon Wayne&amp;rdquo; String)&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
  &lt;li&gt;
-  &lt;p&gt;It use &lt;code&gt;cast&lt;/code&gt; on the query result and generate runtime assertion on  every rows. Typed/racket didn&amp;rsquo;t provide an &lt;code&gt;unsafe-cast&lt;/code&gt; form yet.&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;
+  &lt;p&gt;It uses &lt;code&gt;cast&lt;/code&gt; on the query result and generate runtime assertion on  every rows. Typed/racket didn&amp;rsquo;t provide an &lt;code&gt;unsafe-cast&lt;/code&gt; form yet.&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;
 
 &lt;p&gt;The expansion could look like:&lt;/p&gt;
 
 &lt;div class="brush: racket"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt;1
-2
-3
-4
-5
-6&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;:&lt;/span&gt; &lt;span class="n"&gt;some-query&lt;/span&gt; &lt;span class="n"&gt;:&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Listof&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Vector&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;some-query&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cast&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;exec-query&lt;/span&gt; 
-         &lt;span class="s2"&gt;"SELECT a.name, m.name FROM actor AS a, movie AS m WHERE a.name = ?"&lt;/span&gt;
-         &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ann&lt;/span&gt; &lt;span class="s2"&gt;"Jhon Wayne"&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Listof&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Vectorof&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;))))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+ &lt;pre&gt;&lt;code&gt;(: some-query : (Listof (Vector String String)))
+(define some-query
+  (cast (exec-query 
+         "SELECT a.name, m.name FROM actor AS a, movie AS m WHERE a.name = ?"
+         (ann "Jhon Wayne" String))
+        (Listof (Vectorof String String))))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="conclusion"&gt;Conclusion&lt;/h2&gt;
 
@@ -1298,329 +656,167 @@ array_list:
   &lt;p&gt;The &lt;code&gt;query&lt;/code&gt; 
    &lt;abbr title="Domain Specific Language"&gt;DSL&lt;/abbr&gt; is  redundant with SQL because it&amp;rsquo;s already a DSL. It may be possible to use a  reader for SQL something like &lt;code&gt;#sql"SELECT * FROM table"&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
  &lt;li&gt;
-  &lt;p&gt;The types of the schema information didn&amp;rsquo;t reflect the SQL type, the ability  to pass any kind of type alone isn&amp;rsquo;t usefull, it should also pass two  procedures one to convert from the complex type to some SQL representation  and the inverse. Example: if you want to use json in some column  &lt;code&gt;option&lt;/code&gt; of type &lt;code&gt;TEXT&lt;/code&gt; the definition should be  &lt;code&gt;[options Json read-json write-json]&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+  &lt;p&gt;The types of the schema information didn&amp;rsquo;t reflect the SQL type, the ability  to pass any kind of type alone isn&amp;rsquo;t useful, it should also pass two  procedures one to convert from the complex type to some SQL representation  and the inverse. Example: if you want to use json in some column  &lt;code&gt;option&lt;/code&gt; of type &lt;code&gt;TEXT&lt;/code&gt; the definition should be  &lt;code&gt;[options Json read-json write-json]&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
  &lt;li&gt;
-  &lt;p&gt;All this is an awful lot of works. :)&lt;/p&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/html&gt;</description></item>
+  &lt;p&gt;All this is an awful lot of works. :)&lt;/p&gt;&lt;/li&gt;&lt;/ol&gt;</description></item>
   <item>
    <title>Mapping data from sql result to struct</title>
    <link>http://antoineB.github.io/blog/2015/07/06/mapping-data-from-sql-result-to-struct/?utm_source=racket&amp;utm_medium=RSS</link>
-   <guid>urn:http-antoineB-github-io:-blog-2015-07-06-mapping-data-from-sql-result-to-struct</guid>
+   <guid isPermaLink="false">urn:http-antoineB-github-io:-blog-2015-07-06-mapping-data-from-sql-result-to-struct</guid>
    <pubDate>Mon, 06 Jul 2015 17:15:05 UT</pubDate>
-   <description>&lt;html&gt;
+   <author>antoine</author>
+   <description>
 &lt;p class="lead"&gt;This post describe the implementation of a descriptive macro to fill structures from sql result.&lt;/p&gt;
 
 &lt;br /&gt;
 
 &lt;h2 id="the-goal"&gt;The goal&lt;/h2&gt;
 
-&lt;p&gt;At end of this post we will achive this:&lt;/p&gt;
+&lt;p&gt;At end of this post we will archive this:&lt;/p&gt;
 
 &lt;div class="brush: racket"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt; 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="c1"&gt;;; assume the table actor exist and have at least id, name, age&lt;/span&gt;
+ &lt;pre&gt;&lt;code&gt;;; assume the table actor exist and have at least id, name, age
 
-&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="n"&gt;actor&lt;/span&gt; &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="kd"&gt;#:auto&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="kd"&gt;#:auto&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;age&lt;/span&gt; &lt;span class="kd"&gt;#:auto&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; 
-  &lt;span class="kd"&gt;#:transparent&lt;/span&gt; &lt;span class="kd"&gt;#:mutable&lt;/span&gt; &lt;span class="kd"&gt;#:auto-value&lt;/span&gt; &lt;span class="no"&gt;#f&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+(struct actor ([id #:auto] [name #:auto] [age #:auto]) 
+  #:transparent #:mutable #:auto-value #f)
 
-&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;select&lt;/span&gt;
-    &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s2"&gt;"id"&lt;/span&gt; &lt;span class="n"&gt;actor&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"name"&lt;/span&gt; &lt;span class="n"&gt;actor&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"age"&lt;/span&gt; &lt;span class="n"&gt;actor&lt;/span&gt; &lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-  &lt;span class="s2"&gt;"SELECT a.* FROM actor AS a where a.id = $1"&lt;/span&gt;
-  &lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="c1"&gt;;; =&amp;gt; &amp;#39;(((actor 12 "some name" 80)))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+(select
+    (["id" actor id]
+     ["name" actor name]
+     ["age" actor age])
+  "SELECT a.* FROM actor AS a where a.id = $1"
+  12)
+;; =&amp;gt; '(((actor 12 "some name" 80)))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;!-- more--&gt;
 
-&lt;p&gt;It easily create struct out of sql result.&lt;/p&gt;
+&lt;p&gt;It easily creates struct out of sql result.&lt;/p&gt;
 
 &lt;h2 id="implementation"&gt;Implementation&lt;/h2&gt;
 
 &lt;p&gt;First the mapping function, for every row create the defined struct, and apply the setter according to column name.&lt;/p&gt;
 
 &lt;div class="brush: racket"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt; 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;require&lt;/span&gt; &lt;span class="n"&gt;db&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+ &lt;pre&gt;&lt;code&gt;(require db)
 
-&lt;span class="c1"&gt;;; a parameter to not have to pass around the database connection.&lt;/span&gt;
-&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;current-database-connection&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;make-parameter&lt;/span&gt; &lt;span class="no"&gt;#f&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+;; a parameter to not have to pass around the database connection.
+(define current-database-connection (make-parameter #f))
 
-&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;select-fn&lt;/span&gt; &lt;span class="n"&gt;mapping&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="c1"&gt;;; Return the list in order of the select column name&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;header-&amp;gt;name&lt;/span&gt; &lt;span class="n"&gt;header&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;map&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;cdr&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;assoc&lt;/span&gt; &lt;span class="o"&gt;'&lt;/span&gt;&lt;span class="ss"&gt;name&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt; &lt;span class="n"&gt;header&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-  &lt;span class="c1"&gt;;; Run the sql query get the data and the header&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;match-define&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="n"&gt;rows-result&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="n"&gt;header-&amp;gt;name&lt;/span&gt; &lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;apply&lt;/span&gt; &lt;span class="n"&gt;query&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list*&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;current-database-connection&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-  &lt;span class="c1"&gt;;; Build the struct and make their instances available from their constructor&lt;/span&gt;
-  &lt;span class="c1"&gt;;; procedure&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;build-structs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;for/hash&lt;/span&gt; &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;constructor&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;in-set&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list-&amp;gt;set&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;map&lt;/span&gt; &lt;span class="nb"&gt;third&lt;/span&gt; &lt;span class="n"&gt;mapping&lt;/span&gt;&lt;span class="p"&gt;)))])&lt;/span&gt;
-      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;values&lt;/span&gt; &lt;span class="n"&gt;constructor&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;constructor&lt;/span&gt;&lt;span class="p"&gt;))))&lt;/span&gt;
-  &lt;span class="c1"&gt;;; A structure that map every index to the setter and constructor procedure&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;to-mappeds&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="n"&gt;loop&lt;/span&gt; &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;names&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;for/hash&lt;/span&gt; &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;mapped&lt;/span&gt; &lt;span class="n"&gt;mapping&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-                                         &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;values&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;first&lt;/span&gt; &lt;span class="n"&gt;mapped&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;rest&lt;/span&gt; &lt;span class="n"&gt;mapped&lt;/span&gt;&lt;span class="p"&gt;)))]&lt;/span&gt;
-                                &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;indice&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-                                &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;headers&lt;/span&gt; &lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-                                &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;#hash&lt;/span&gt;&lt;span class="p"&gt;()])&lt;/span&gt;
-                       &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;or&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;empty?&lt;/span&gt; &lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;hash-empty?&lt;/span&gt; &lt;span class="n"&gt;names&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-                           &lt;span class="n"&gt;result&lt;/span&gt;
-                           &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let*&lt;/span&gt; &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;header&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;first&lt;/span&gt; &lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
-                                  &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;present&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;hash-ref&lt;/span&gt; &lt;span class="n"&gt;names&lt;/span&gt; &lt;span class="n"&gt;header&lt;/span&gt; &lt;span class="no"&gt;#f&lt;/span&gt;&lt;span class="p"&gt;)])&lt;/span&gt;
-                             &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;loop&lt;/span&gt;
-                              &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;present&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;hash-remove&lt;/span&gt; &lt;span class="n"&gt;names&lt;/span&gt; &lt;span class="n"&gt;header&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;names&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                              &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;add1&lt;/span&gt; &lt;span class="n"&gt;indice&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                              &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;rest&lt;/span&gt; &lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                              &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;present&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;hash-set&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="n"&gt;indice&lt;/span&gt;
-                                                    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;hash-ref&lt;/span&gt; &lt;span class="n"&gt;names&lt;/span&gt; &lt;span class="n"&gt;header&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-                                  &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;))))))&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;length-row&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;length&lt;/span&gt; &lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;for/list&lt;/span&gt; &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;row&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-    &lt;span class="c1"&gt;;; build a new set of structure for each row&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;structs&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;build-structs&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-    &lt;span class="c1"&gt;;; for each column fetch  the relevant struct instance and apply its setter&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;([(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="n"&gt;to-mapped&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;to-mappeds&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-      &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nb"&gt;first&lt;/span&gt; &lt;span class="n"&gt;to-mapped&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-       &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;hash-ref&lt;/span&gt; &lt;span class="n"&gt;structs&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;second&lt;/span&gt; &lt;span class="n"&gt;to-mapped&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-       &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;vector-ref&lt;/span&gt; &lt;span class="n"&gt;row&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;hash-values&lt;/span&gt; &lt;span class="n"&gt;structs&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+(define (select-fn mapping request . args)
+  ;; Return the list in order of the select column name
+  (define (header-&amp;gt;name header)
+    (map (lambda (x) (cdr (assoc 'name x))) header))
+  ;; Run the sql query get the data and the header
+  (match-define (struct rows-result ((app header-&amp;gt;name headers) data))
+    (apply query (list* (current-database-connection) request args)))
+  ;; Build the struct and make their instances available from their constructor
+  ;; procedure
+  (define (build-structs)
+    (for/hash ([constructor (in-set (list-&amp;gt;set (map third mapping)))])
+      (values constructor (constructor))))
+  ;; A structure that map every index to the setter and constructor procedure
+  (define to-mappeds (let loop ([names (for/hash ([mapped mapping])
+                                         (values (first mapped) (rest mapped)))]
+                                [indice 0]
+                                [headers headers]
+                                [result #hash()])
+                       (if (or (empty? headers) (hash-empty? names))
+                           result
+                           (let* ([header (first headers)]
+                                  [present (hash-ref names header #f)])
+                             (loop
+                              (if present (hash-remove names header) names)
+                              (add1 indice)
+                              (rest headers)
+                              (if present (hash-set result indice
+                                                    (hash-ref names header))
+                                  result))))))
+  (define length-row (length headers))
+  (for/list ([row data])
+    ;; build a new set of structure for each row
+    (define structs (build-structs))
+    ;; for each column fetch the relevant struct instance and apply its setter
+    (for ([(name to-mapped) to-mappeds])
+      ((first to-mapped)
+       (hash-ref structs (second to-mapped))
+       (vector-ref row name)))
+    (hash-values structs)))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;div class="brush: racket"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt;1
-2
-3
-4
-5
-6
-7&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="c1"&gt;;; and an example to make the thing clearer&lt;/span&gt;
-&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;select-fn&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;
-             &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt; &lt;span class="s2"&gt;"id"&lt;/span&gt; &lt;span class="n"&gt;set-actor-id!&lt;/span&gt; &lt;span class="n"&gt;actor&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-             &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;  &lt;span class="s2"&gt;"name"&lt;/span&gt; &lt;span class="n"&gt;set-actor-name!&lt;/span&gt; &lt;span class="n"&gt;actor&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-             &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt; &lt;span class="s2"&gt;"age"&lt;/span&gt; &lt;span class="n"&gt;set-actor-age!&lt;/span&gt; &lt;span class="n"&gt;actor&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-             &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt; &lt;span class="s2"&gt;"gender"&lt;/span&gt; &lt;span class="n"&gt;set-actor-gender!&lt;/span&gt; &lt;span class="n"&gt;actor&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-           &lt;span class="s2"&gt;"SELECT a.* FROM actor AS a"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+ &lt;pre&gt;&lt;code&gt;;; and an example to make the thing clearer
+(select-fn (list
+             (list "id" set-actor-id! actor)
+             (list  "name" set-actor-name! actor)
+             (list "age" set-actor-age! actor)
+             (list "gender" set-actor-gender! actor))
+           "SELECT a.* FROM actor AS a")&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Second the syntax transformer, the bare minimal to output the example above:&lt;/p&gt;
 
 &lt;div class="brush: racket"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt; 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;begin-for-syntax&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;require&lt;/span&gt; &lt;span class="n"&gt;syntax/parse&lt;/span&gt;
-           &lt;span class="n"&gt;racket/string&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+ &lt;pre&gt;&lt;code&gt;(begin-for-syntax
+  (require syntax/parse
+           racket/string))
 
-&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define-syntax&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;select&lt;/span&gt; &lt;span class="n"&gt;stx&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;syntax-parse&lt;/span&gt; &lt;span class="n"&gt;stx&lt;/span&gt;
-    &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="k"&gt;_&lt;/span&gt; &lt;span class="n"&gt;stmt:str&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt; &lt;span class="k"&gt;...&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-     &lt;span class="o"&gt;#`&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;current-database-connection&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;stmt&lt;/span&gt; &lt;span class="o"&gt;#,@#'&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt; &lt;span class="k"&gt;...&lt;/span&gt;&lt;span class="p"&gt;))]&lt;/span&gt;
-    &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="k"&gt;_&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;attributes&lt;/span&gt; &lt;span class="k"&gt;...&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;stmt:str&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt; &lt;span class="k"&gt;...&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-     &lt;span class="o"&gt;#`&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;select-fn&lt;/span&gt;
-        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;
-         &lt;span class="o"&gt;#,@&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;map&lt;/span&gt;
-             &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-               &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let*&lt;/span&gt; &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;lst&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;syntax-&amp;gt;list&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
-                      &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;setter&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;string-append&lt;/span&gt; &lt;span class="s2"&gt;"set-"&lt;/span&gt; 
-                                             &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;symbol-&amp;gt;string&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;syntax-e&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;cadr&lt;/span&gt; &lt;span class="n"&gt;lst&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-                                             &lt;span class="s2"&gt;"-"&lt;/span&gt; 
-                                             &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;symbol-&amp;gt;string&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;syntax-e&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;caddr&lt;/span&gt; &lt;span class="n"&gt;lst&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-                                             &lt;span class="s2"&gt;"!"&lt;/span&gt;&lt;span class="p"&gt;)])&lt;/span&gt;
-                 &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt; &lt;span class="o"&gt;#'&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;car&lt;/span&gt; &lt;span class="n"&gt;lst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;datum-&amp;gt;syntax&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;string-&amp;gt;symbol&lt;/span&gt; &lt;span class="n"&gt;setter&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;cadr&lt;/span&gt; &lt;span class="n"&gt;lst&lt;/span&gt;&lt;span class="p"&gt;))))&lt;/span&gt;
-             &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;syntax-&amp;gt;list&lt;/span&gt; &lt;span class="o"&gt;#'&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;attributes&lt;/span&gt; &lt;span class="k"&gt;...&lt;/span&gt;&lt;span class="p"&gt;))))&lt;/span&gt;
-        &lt;span class="n"&gt;stmt&lt;/span&gt;
-        &lt;span class="o"&gt;#,@#'&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt; &lt;span class="k"&gt;...&lt;/span&gt;&lt;span class="p"&gt;))]))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+(define-syntax (select stx)
+  (syntax-parse stx
+    [(_ stmt:str args ...)
+     #`(query (current-database-connection) stmt #,@#'(args ...))]
+    [(_ (attributes ...) stmt:str args ...)
+     #`(select-fn
+        (list
+         #,@(map
+             (lambda (x)
+               (let* ([lst (syntax-&amp;gt;list x)]
+                      [setter (string-append "set-" 
+                                             (symbol-&amp;gt;string (syntax-e (cadr lst)))
+                                             "-" 
+                                             (symbol-&amp;gt;string (syntax-e (caddr lst)))
+                                             "!")])
+                 (list #'list (car lst) (datum-&amp;gt;syntax x (string-&amp;gt;symbol setter)) (cadr lst))))
+             (syntax-&amp;gt;list #'(attributes ...))))
+        stmt
+        #,@#'(args ...))]))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;h2 id="short-comming-and-evolution"&gt;Short comming and evolution&lt;/h2&gt;
+&lt;h2 id="shortcoming-and-evolution"&gt;Shortcoming and evolution&lt;/h2&gt;
 
-&lt;p&gt;The first sort comming that come is the relying on mutable and empty constructor fields, using the struct-info it should be posible to make the link between the field name and the position but probably can&amp;rsquo;t specify an non empty constructor will not be missing arguments at runtime.&lt;/p&gt;
+&lt;p&gt;The first shortcoming is the relying on mutable and empty constructor fields, using the struct-info it should be possible to make the link between the field name and the position but probably can&amp;rsquo;t specify a non-empty constructor will not be missing arguments at runtime.&lt;/p&gt;
 
 &lt;p&gt;Its is not possible to use multiple time the same struct definition:&lt;/p&gt;
 
 &lt;div class="brush: racket"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt;1
-2
-3
-4
-5
-6
-7
-8&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;select&lt;/span&gt;
-    &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s2"&gt;"id"&lt;/span&gt; &lt;span class="n"&gt;actor&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"name"&lt;/span&gt; &lt;span class="n"&gt;actor&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"age"&lt;/span&gt; &lt;span class="n"&gt;actor&lt;/span&gt; &lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"b_id"&lt;/span&gt; &lt;span class="n"&gt;actor&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"b_name"&lt;/span&gt; &lt;span class="n"&gt;actor&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"b_age"&lt;/span&gt; &lt;span class="n"&gt;actor&lt;/span&gt; &lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-  &lt;span class="s2"&gt;"SELECT a.*, b.id as b_id, b.name as b_name, b.age as b_age FROM actor AS a FROM actor AS b"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+ &lt;pre&gt;&lt;code&gt;(select
+    (["id" actor id]
+     ["name" actor name]
+     ["age" actor age]
+     ["b_id" actor id]
+     ["b_name" actor name]
+     ["b_age" actor age])
+  "SELECT a.*, b.id as b_id, b.name as b_name, b.age as b_age FROM actor AS a FROM actor AS b")&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;The two actor will be confliction, we need to specify which actor we want to fill with, for example like:&lt;/p&gt;
+&lt;p&gt;The two actor will be conflicting, we need to specify which one we want to be filled with, for example like:&lt;/p&gt;
 
 &lt;div class="brush: racket"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt; 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;select&lt;/span&gt;
-  &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;actor&lt;/span&gt; &lt;span class="s2"&gt;"mister a"&lt;/span&gt;
-     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"id"&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"name"&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"age"&lt;/span&gt; &lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;actor&lt;/span&gt; &lt;span class="s2"&gt;"mister b"&lt;/span&gt;
-     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"b_id"&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"b_name"&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"b_age"&lt;/span&gt; &lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt;
-  &lt;span class="s2"&gt;"SELECT a.*, b.id as b_id, b.name as b_name, b.age as b_age FROM actor AS a FROM actor AS b"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+ &lt;pre&gt;&lt;code&gt;(select
+  ((actor "mister a"
+     ["id" id]
+     ["name" name]
+     ["age" age])
+   (actor "mister b"
+     ["b_id" id]
+     ["b_name" name]
+     ["b_age" age]))
+  "SELECT a.*, b.id as b_id, b.name as b_name, b.age as b_age FROM actor AS a FROM actor AS b")&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;As shown with the example above the column with same name is problematic, its need to be explicitly changed &amp;ldquo;b.id AS b_id&amp;rdquo;.&lt;/p&gt;
 
-&lt;p&gt;Extract knowledge from the SQL string and apply some checks, and go even further with an awareness of the schema.&lt;/p&gt;&lt;/html&gt;</description></item>
+&lt;p&gt;Extract knowledge from the SQL string and apply some checks, and go even further with an awareness of the schema.&lt;/p&gt;</description></item>
   <item>
    <title>basic fastcgi with racket</title>
    <link>http://antoineB.github.io/blog/2015/06/02/basic-fastcgi-with-racket/?utm_source=racket&amp;utm_medium=RSS</link>
-   <guid>urn:http-antoineB-github-io:-blog-2015-06-02-basic-fastcgi-with-racket</guid>
+   <guid isPermaLink="false">urn:http-antoineB-github-io:-blog-2015-06-02-basic-fastcgi-with-racket</guid>
    <pubDate>Tue, 02 Jun 2015 17:06:53 UT</pubDate>
-   <description>&lt;html&gt;
+   <author>antoine</author>
+   <description>
 &lt;p class="lead"&gt;The objective is to implement the most basic working fastcgi protocol in pure racket.&lt;/p&gt;
 
 &lt;br /&gt;
@@ -1636,7 +832,7 @@ array_list:
  &lt;li&gt;close connection&lt;/li&gt;&lt;/ol&gt;
 &lt;!-- more--&gt;
 
-&lt;p&gt;A request is composed of parts denoted here as &lt;em&gt;segment&lt;/em&gt;. Every segments is composed of an header of 8 bytes and some data of 
+&lt;p&gt;A request is composed of parts denoted here as &lt;em&gt;segment&lt;/em&gt;. Each segment is composed of a header of 8 bytes and some data of 
  &lt;var&gt;N&lt;/var&gt; bytes and padding of 
  &lt;var&gt;M&lt;/var&gt; bytes where 
  &lt;var&gt;N&lt;/var&gt; and 
@@ -1656,239 +852,110 @@ array_list:
 
 &lt;h2 id="racket-implementation"&gt;Racket implementation&lt;/h2&gt;
 
-&lt;p&gt;The decoding incomming bytes part:&lt;/p&gt;
+&lt;p&gt;The decoding incoming bytes part:&lt;/p&gt;
 
 &lt;div class="brush: racket"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt; 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="kn"&gt;#lang &lt;/span&gt;&lt;span class="nn"&gt;racket&lt;/span&gt;
+ &lt;pre&gt;&lt;code&gt;#lang racket
 
-&lt;span class="c1"&gt;;; to store the input data&lt;/span&gt;
-&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;segment-id&lt;/span&gt; &lt;span class="n"&gt;stdin&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="kd"&gt;#:mutable&lt;/span&gt; &lt;span class="kd"&gt;#:transparent&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+;; to store the input data
+(struct request [segment-id stdin data params] #:mutable #:transparent)
 
-&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;create-empty-request&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt; &lt;span class="no"&gt;#f&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;open-output-bytes&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;open-output-bytes&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;open-output-bytes&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+(define (create-empty-request)
+  (request #f (open-output-bytes) (open-output-bytes) (open-output-bytes)))
 
-&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;decode-segment&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="c1"&gt;;; don&amp;#39;t care if read-bytes return eof&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;header&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;read-bytes&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;segment-type&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;bytes-ref&lt;/span&gt; &lt;span class="n"&gt;header&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;segment-id&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;arithmetic-shift&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;bytes-ref&lt;/span&gt; &lt;span class="n"&gt;header&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                          &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;bytes-ref&lt;/span&gt; &lt;span class="n"&gt;header&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-  &lt;span class="c1"&gt;;; don&amp;#39;t care if read-bytes return eof&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;data-length&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;arithmetic-shift&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;bytes-ref&lt;/span&gt; &lt;span class="n"&gt;header&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                         &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;bytes-ref&lt;/span&gt; &lt;span class="n"&gt;header&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;read-bytes&lt;/span&gt; &lt;span class="n"&gt;data-length&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-  &lt;span class="c1"&gt;;; consume the padding bytes&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;void&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;read-bytes&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;bytes-ref&lt;/span&gt; &lt;span class="n"&gt;header&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+(define (decode-segment request in out)
+  ;; don't care if read-bytes return eof
+  (define header (read-bytes 8 in))
+  (define segment-type (bytes-ref header 1))
+  (define segment-id (+ (arithmetic-shift (bytes-ref header 2) 8)
+                          (bytes-ref header 3)))
+  ;; don't care if read-bytes return eof
+  (define data-length (+ (arithmetic-shift (bytes-ref header 4) 8)
+                         (bytes-ref header 5)))
+  (define data (read-bytes data-length in))
+  ;; consume the padding bytes
+  (void (read-bytes (bytes-ref header 6) in))
 
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;printf&lt;/span&gt; &lt;span class="s2"&gt;"segment type: ~a&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; &lt;span class="n"&gt;segment-type&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;printf&lt;/span&gt; &lt;span class="s2"&gt;"id: ~a&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; &lt;span class="n"&gt;segment-id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;printf&lt;/span&gt; &lt;span class="s2"&gt;"data length: ~a&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; &lt;span class="n"&gt;data-length&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;printf&lt;/span&gt; &lt;span class="s2"&gt;"~a&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  (printf "segment type: ~a\n" segment-type)
+  (printf "id: ~a\n" segment-id)
+  (printf "data length: ~a\n" data-length)
+  (printf "~a\n" data)
 
-  &lt;span class="c1"&gt;;; segment-id = 0 is a special case where the web server and the fastcgi&lt;/span&gt;
-  &lt;span class="c1"&gt;;; process exchange information like n° of maximum connection so... we don&amp;#39;t&lt;/span&gt;
-  &lt;span class="c1"&gt;;; care.&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;when&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;segment-id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;raise&lt;/span&gt; &lt;span class="s2"&gt;"unimplemented"&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+  ;; segment-id = 0 is a special case where the web server and the fastcgi
+  ;; process exchange information like n° of maximum connection so... we don't
+  ;; care.
+  (when (= 0 segment-id)
+    (raise "unimplemented"))
 
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;printf&lt;/span&gt; &lt;span class="s2"&gt;"~a&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  (printf "~a\n" request)
 
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="n"&gt;segment-type&lt;/span&gt;
-    &lt;span class="c1"&gt;;; fcgi beginrequest&lt;/span&gt;
-    &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;set-request-segment-id!&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt; &lt;span class="n"&gt;segment-id&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-    &lt;span class="c1"&gt;;; fcgi params&lt;/span&gt;
-    &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;display&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request-params&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-    &lt;span class="c1"&gt;;; fcgi stdin&lt;/span&gt;
-    &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;data-length&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;; Not sure if it&amp;#39;s the rigth way but use that to&lt;/span&gt;
-                               &lt;span class="c1"&gt;; know if the webserver input is over.&lt;/span&gt;
-             &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;respond&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-             &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;display&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request-stdin&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;))))&lt;/span&gt;
-    &lt;span class="c1"&gt;;; fcgi data&lt;/span&gt;
-    &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;display&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request-data&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-    &lt;span class="c1"&gt;;; fcgi get values&lt;/span&gt;
-    &lt;span class="c1"&gt;;; fcgi abort request&lt;/span&gt;
-    &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;raise&lt;/span&gt; &lt;span class="s2"&gt;"unimplemented"&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;raise&lt;/span&gt; &lt;span class="s2"&gt;"undocumented type"&lt;/span&gt;&lt;span class="p"&gt;))))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+  (case segment-type
+    ;; fcgi beginrequest
+    ((1) (set-request-segment-id! request segment-id))
+    ;; fcgi params
+    ((4) (display data (request-params request)))
+    ;; fcgi stdin
+    ((5) (if (= 0 data-length) ; Not sure if it's the rigth way but use that to
+                               ; know if the webserver input is over.
+             (respond request out)
+             (display data (request-stdin request))))
+    ;; fcgi data
+    ((8) (display data (request-data request)))
+    ;; fcgi get values
+    ;; fcgi abort request
+    ((2 9) (raise "unimplemented"))
+    (else (raise "undocumented type"))))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;The response:&lt;/p&gt;
 
 &lt;div class="brush: racket"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt; 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;build-header&lt;/span&gt; &lt;span class="n"&gt;type&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="n"&gt;data-length&lt;/span&gt; &lt;span class="n"&gt;padding-length&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;bytes&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;type&lt;/span&gt;
-         &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;arithmetic-shift&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="mi"&gt;-8&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;modulo&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="mi"&gt;256&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-         &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;arithmetic-shift&lt;/span&gt; &lt;span class="n"&gt;data-length&lt;/span&gt; &lt;span class="mi"&gt;-8&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;modulo&lt;/span&gt; &lt;span class="n"&gt;data-length&lt;/span&gt; &lt;span class="mi"&gt;256&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-         &lt;span class="n"&gt;padding-length&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+ &lt;pre&gt;&lt;code&gt;(define (build-header type id data-length padding-length)
+  (bytes 1 type
+         (arithmetic-shift id -8) (modulo id 256)
+         (arithmetic-shift data-length -8) (modulo data-length 256)
+         padding-length 0))
 
-&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;respond&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="c1"&gt;;; header of the stdout&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;write-bytes&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;build-header&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request-segment-id&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="mi"&gt;64&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="c1"&gt;;; the stdout data&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;write-bytes&lt;/span&gt;
-   &lt;span class="s2"&gt;#"Content-type: text/html&lt;/span&gt;&lt;span class="se"&gt;\r\n\r\n&lt;/span&gt;&lt;span class="s2"&gt;&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;hello fcgi&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt; "&lt;/span&gt;
-   &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="c1"&gt;;; an empty stdout data to indicate we have finish the stdout stream&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;write-bytes&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;build-header&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request-segment-id&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="c1"&gt;;; the end request type&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;write-bytes&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;build-header&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request-segment-id&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;write-bytes&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;bytes&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;close-output-port&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+(define (respond request out)
+  ;; header of the stdout
+  (write-bytes (build-header 6 (request-segment-id request) 64 0) out)
+  ;; the stdout data
+  (write-bytes
+   #"Content-type: text/html\r\n\r\n&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;hello fcgi&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt; "
+   out)
+  ;; an empty stdout data to indicate we have finish the stdout stream
+  (write-bytes (build-header 6 (request-segment-id request) 0 0) out)
+  ;; the end request type
+  (write-bytes (build-header 3 (request-segment-id request) 8 0) out)
+  (write-bytes (bytes 0 0 0 0 0 0 0 0) out)
+  (close-output-port out))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;The server:&lt;/p&gt;
 
 &lt;div class="brush: racket"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt; 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;module+&lt;/span&gt; &lt;span class="n"&gt;main&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;require&lt;/span&gt; &lt;span class="n"&gt;racket/tcp&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;tcp-listen&lt;/span&gt; &lt;span class="mi"&gt;1025&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="n"&gt;loop-main&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let-values&lt;/span&gt; &lt;span class="p"&gt;([(&lt;/span&gt;&lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;tcp-accept&lt;/span&gt; &lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
-                 &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;create-empty-request&lt;/span&gt;&lt;span class="p"&gt;)])&lt;/span&gt;
-      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="n"&gt;loop&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;
-        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;port-closed?&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-            &lt;span class="c1"&gt;;; the end of the request&lt;/span&gt;
-            &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;close-input-port&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-             &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;begin&lt;/span&gt;
-               &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;decode-segment&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-               &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;loop&lt;/span&gt;&lt;span class="p"&gt;))))&lt;/span&gt;
-      &lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;loop-main&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+ &lt;pre&gt;&lt;code&gt;(module+ main
+  (require racket/tcp)
+  (define server (tcp-listen 1025))
+  (let loop-main ()
+    (let-values ([(in out) (tcp-accept server)]
+                 [(request) (create-empty-request)])
+      (let loop ()
+        (if (port-closed? out)
+            ;; the end of the request
+            (close-input-port in)
+             (begin
+               (decode-segment request in out)
+               (loop))))
+      )
+    (loop-main)))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Nginx configuration:&lt;/p&gt;
 
 &lt;div class="brush: nginx"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt;1
-2
-3
-4
-5&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="k"&gt;location&lt;/span&gt; &lt;span class="p"&gt;~&lt;/span&gt; &lt;span class="sr"&gt;\.rkt$&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="kn"&gt;fastcgi_pass&lt;/span&gt; &lt;span class="n"&gt;127.0.0.1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;1025&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="kn"&gt;include&lt;/span&gt; &lt;span class="s"&gt;fastcgi.conf&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;# this add several parameters to be pass&lt;/span&gt;
-                          &lt;span class="c1"&gt;# to the fastcgi process like http method.&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+ &lt;pre&gt;&lt;code&gt;location ~ \.rkt$ {
+    fastcgi_pass 127.0.0.1:1025;
+    include fastcgi.conf; # this add several parameters to be pass
+                          # to the fastcgi process like http method.
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;go to &lt;em&gt;http://localhost/anything.rkt&lt;/em&gt; that display &amp;ldquo;hello fcgi&amp;rdquo;&lt;/p&gt;
 
@@ -1897,158 +964,76 @@ array_list:
 &lt;p&gt;First of all we need to extract the parameters form the request-params field, it is &lt;a href="http://www.fastcgi.com/devkit/doc/fcgi-spec.html#S3.4"&gt;name, value pair&lt;/a&gt; with their respective length before.&lt;/p&gt;
 
 &lt;div class="brush: racket"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt; 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;decode-params&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;decode-param-length&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;b3&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;read-byte&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;cond&lt;/span&gt; &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="nb"&gt;equal?&lt;/span&gt; &lt;span class="n"&gt;b3&lt;/span&gt; &lt;span class="nb"&gt;eof&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nb"&gt;eof&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-          &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="nb"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;b3&lt;/span&gt; &lt;span class="mh"&gt;#x7f&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-           &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;others&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;read-bytes&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="p"&gt;)])&lt;/span&gt;
-             &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;+&lt;/span&gt;
-              &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;arithmetic-shift&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;bitwise-and&lt;/span&gt; &lt;span class="n"&gt;b3&lt;/span&gt; &lt;span class="mh"&gt;#x7f&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="mi"&gt;24&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-              &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;arithmetic-shift&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;bytes-ref&lt;/span&gt; &lt;span class="n"&gt;others&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-              &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;arithmetic-shift&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;bytes-ref&lt;/span&gt; &lt;span class="n"&gt;others&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-              &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;bytes-ref&lt;/span&gt; &lt;span class="n"&gt;others&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)))]&lt;/span&gt;
-          &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="n"&gt;b3&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="n"&gt;loop&lt;/span&gt; &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="nb"&gt;empty&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;length0&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;decode-param-length&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="p"&gt;)])&lt;/span&gt;
-      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;equal?&lt;/span&gt; &lt;span class="nb"&gt;eof&lt;/span&gt; &lt;span class="n"&gt;length0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-          &lt;span class="n"&gt;result&lt;/span&gt;
-          &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;length1&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;decode-param-length&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="p"&gt;)])&lt;/span&gt;
-            &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;loop&lt;/span&gt;
-             &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;cons&lt;/span&gt;
-              &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;cons&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;read-bytes&lt;/span&gt; &lt;span class="n"&gt;length0&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;read-bytes&lt;/span&gt; &lt;span class="n"&gt;length1&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-              &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;)))))))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+ &lt;pre&gt;&lt;code&gt;(define (decode-params in)
+  (define (decode-param-length in)
+    (define b3 (read-byte in))
+    (cond [(equal? b3 eof) eof]
+          [(&amp;gt; b3 #x7f)
+           (let ([others (read-bytes 3 in)])
+             (+
+              (arithmetic-shift (bitwise-and b3 #x7f) 24)
+              (arithmetic-shift (bytes-ref others 2) 16)
+              (arithmetic-shift (bytes-ref others 1) 8)
+              (bytes-ref others 0)))]
+          [else b3]))
+  (let loop ([result empty])
+    (let ([length0 (decode-param-length in)])
+      (if (equal? eof length0)
+          result
+          (let ([length1 (decode-param-length in)])
+            (loop
+             (cons
+              (cons (read-bytes length0 in)
+                    (read-bytes length1 in))
+              result)))))))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Apply this decoder and present them, also do convenience functions.&lt;/p&gt;
 
 &lt;div class="brush: racket"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt; 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fcgi-end-request&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;write-bytes&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;build-header&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;write-bytes&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;bytes&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;close-output-port&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+ &lt;pre&gt;&lt;code&gt;(define (fcgi-end-request id out)
+  (write-bytes (build-header 3 id 8 0) out)
+  (write-bytes (bytes 0 0 0 0 0 0 0 0) out)
+  (close-output-port out))
  
-&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;write-fcgi-stdout&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt; &lt;span class="no"&gt;#f&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;data-length&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;bytes-length&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;padding-length&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;modulo&lt;/span&gt; &lt;span class="n"&gt;data-length&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;modulo&lt;/span&gt; &lt;span class="n"&gt;data-length&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;))))&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;write-bytes&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;build-header&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="n"&gt;data-length&lt;/span&gt; &lt;span class="n"&gt;padding-length&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;write-bytes&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;when&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;not&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;padding-length&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;write-bytes&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;make-bytes&lt;/span&gt; &lt;span class="n"&gt;padding-length&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;when&lt;/span&gt; &lt;span class="n"&gt;close&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;write-bytes&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;build-header&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+(define (write-fcgi-stdout id data out [close #f])
+  (define data-length (bytes-length data))
+  (define padding-length (if (= 0 (modulo data-length 8)) 0 (- 8 (modulo data-length 8))))
+  (write-bytes (build-header 6 id data-length padding-length) out)
+  (write-bytes data out)
+  (when (not (= 0 padding-length))
+    (write-bytes (make-bytes padding-length) out))
+  (when close
+    (write-bytes (build-header 6 id 0 0) out)))
 
-&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;respond&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="c1"&gt;;; get the data from request&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;decode-params&lt;/span&gt;
-                  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;open-input-bytes&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;port&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request-params&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;)])&lt;/span&gt;
-                                      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;close-output-port&lt;/span&gt; &lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                                      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;get-output-bytes&lt;/span&gt; &lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="p"&gt;)))))&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;open-output-bytes&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;write-bytes&lt;/span&gt; &lt;span class="s2"&gt;#"Content-type: text/html&lt;/span&gt;&lt;span class="se"&gt;\r\n\r\n&lt;/span&gt;&lt;span class="s2"&gt;&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;"&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;write-bytes&lt;/span&gt; &lt;span class="s2"&gt;#"&amp;lt;table&amp;gt;"&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;param&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;write-bytes&lt;/span&gt; &lt;span class="s2"&gt;#"&amp;lt;tr&amp;gt;&amp;lt;td&amp;gt;"&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;write-bytes&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;car&lt;/span&gt; &lt;span class="n"&gt;param&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;write-bytes&lt;/span&gt; &lt;span class="s2"&gt;#"&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;"&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;write-bytes&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;cdr&lt;/span&gt; &lt;span class="n"&gt;param&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;write-bytes&lt;/span&gt; &lt;span class="s2"&gt;#"&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;"&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;write-bytes&lt;/span&gt; &lt;span class="s2"&gt;#"&amp;lt;/table&amp;gt;"&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;write-bytes&lt;/span&gt; &lt;span class="s2"&gt;#"&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;"&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;close-output-port&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+(define (respond request out)
+  ;; get the data from request
+  (define params (decode-params
+                  (open-input-bytes (let ([port (request-params request)])
+                                      (close-output-port port)
+                                      (get-output-bytes port)))))
+  (define data (open-output-bytes))
+  (write-bytes #"Content-type: text/html\r\n\r\n&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;" data)
+  (write-bytes #"&amp;lt;table&amp;gt;" data)
+  (for ([param params])
+    (write-bytes #"&amp;lt;tr&amp;gt;&amp;lt;td&amp;gt;" data)
+    (write-bytes (car param) data)
+    (write-bytes #"&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;" data)
+    (write-bytes (cdr param) data)
+    (write-bytes #"&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;" data))
+  (write-bytes #"&amp;lt;/table&amp;gt;" data)
+  (write-bytes #"&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;" data)
+  (close-output-port data)
 
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;write-fcgi-stdout&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request-segment-id&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                     &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;get-output-bytes&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                     &lt;span class="n"&gt;out&lt;/span&gt;
-                     &lt;span class="no"&gt;#t&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="c1"&gt;;; the end request type&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fcgi-end-request&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request-segment-id&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+  (write-fcgi-stdout (request-segment-id request)
+                     (get-output-bytes data)
+                     out
+                     #t)
+  ;; the end request type
+  (fcgi-end-request (request-segment-id request) out))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="performance-expectation"&gt;Performance expectation&lt;/h2&gt;
 
-&lt;p&gt;To have an idea where the n° of requests per seconds i used &lt;code&gt;ab -c 25 -n 10000&lt;/code&gt; on several configurations:&lt;/p&gt;
+&lt;p&gt;To have an idea where the n° of requests per seconds I used &lt;code&gt;ab -c 25 -n 10000&lt;/code&gt; on several configurations:&lt;/p&gt;
 
 &lt;ul&gt;
  &lt;li&gt;racket web/server (a web server written in pure racket): 1300&lt;/li&gt;
@@ -2057,7 +1042,7 @@ array_list:
  &lt;li&gt;nginx: 18000&lt;/li&gt;
  &lt;li&gt;my stuff: 300&lt;/li&gt;&lt;/ul&gt;
 
-&lt;p&gt;Wait what 300, something is wrong obviously, furthermore &lt;code&gt;ab&lt;/code&gt; get stuck most of the time at the last 1000 request. After suspecting the gc i find that i didn&amp;rsquo;t read the doc for &lt;a href="http://docs.racket-lang.org/reference/tcp.html?q=tcp-liste#%28def._%28%28lib._racket%2Ftcp..rkt%29._tcp-listen%29%29"&gt;tcp-listen&lt;/a&gt; and changed the max-allow-wait to something like 1024. And get then 2500 request/second, even more by removing printf to 6500 r/s.&lt;/p&gt;
+&lt;p&gt;Wait what 300, something is wrong obviously, furthermore &lt;code&gt;ab&lt;/code&gt; get stuck most of the time at the last 1000 request. After suspecting the gc I find that I didn&amp;rsquo;t read the doc for &lt;a href="http://docs.racket-lang.org/reference/tcp.html?q=tcp-liste#%28def._%28%28lib._racket%2Ftcp..rkt%29._tcp-listen%29%29"&gt;tcp-listen&lt;/a&gt; and changed the max-allow-wait to something like 1024. And get then 2500 request/second, even more by removing printf to 6500 r/s.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href="/code/fastcgi.rkt"&gt;The whole code&lt;/a&gt;&lt;/p&gt;
 
@@ -2068,56 +1053,26 @@ array_list:
 &lt;p&gt;The change to the code is straightforward just create a new thread for &lt;strong&gt;every&lt;/strong&gt; incoming request.&lt;/p&gt;
 
 &lt;div class="brush: racket"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt; 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;module+&lt;/span&gt; &lt;span class="n"&gt;main&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;require&lt;/span&gt; &lt;span class="n"&gt;racket/tcp&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;tcp-listen&lt;/span&gt; &lt;span class="mi"&gt;1025&lt;/span&gt; &lt;span class="mi"&gt;1024&lt;/span&gt; &lt;span class="no"&gt;#t&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="n"&gt;loop-main&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let-values&lt;/span&gt; &lt;span class="p"&gt;([(&lt;/span&gt;&lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;tcp-accept&lt;/span&gt; &lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
-                 &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;create-empty-request&lt;/span&gt;&lt;span class="p"&gt;)])&lt;/span&gt;
-      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;thread&lt;/span&gt;
-       &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;
-         &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="n"&gt;loop&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;
-           &lt;span class="c1"&gt;;; similate work&lt;/span&gt;
-           &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;sleep&lt;/span&gt; &lt;span class="n"&gt;sleeping-time&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-           &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;port-closed?&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-               &lt;span class="c1"&gt;;; the end of the request&lt;/span&gt;
-               &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;close-input-port&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-               &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;begin&lt;/span&gt;
-                 &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;decode-segment&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                 &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;loop&lt;/span&gt;&lt;span class="p"&gt;))))&lt;/span&gt;
-         &lt;span class="p"&gt;))&lt;/span&gt;
-      &lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;loop-main&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+ &lt;pre&gt;&lt;code&gt;(module+ main
+  (require racket/tcp)
+  (define server (tcp-listen 1025 1024 #t))
+  (let loop-main ()
+    (let-values ([(in out) (tcp-accept server)]
+                 [(request) (create-empty-request)])
+      (thread
+       (lambda ()
+         (let loop ()
+           ;; similate work
+           (sleep sleeping-time)
+           (if (port-closed? out)
+               ;; the end of the request
+               (close-input-port in)
+               (begin
+                 (decode-segment request in out)
+                 (loop))))
+         ))
+      )
+    (loop-main)))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;To show the difference from before lets simulate some work with the sleeping-time variable and use &lt;code&gt;ab -c 100 -n 10000&lt;/code&gt; to run our experiments.&lt;/p&gt;
 
@@ -2142,114 +1097,56 @@ array_list:
 &lt;p&gt;Instead of create a new thread and a new request every time we have an incoming request, create a bunch of thread and select them through a round robin approach.&lt;/p&gt;
 
 &lt;div class="brush: racket"&gt;
- &lt;table class="sourcetable"&gt;
-  &lt;tbody&gt;
-   &lt;tr&gt;
-    &lt;td class="linenos"&gt;
-     &lt;div class="linenodiv"&gt;
-      &lt;pre&gt; 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-    &lt;td class="code"&gt;
-     &lt;div class="source"&gt;
-      &lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;module+&lt;/span&gt; &lt;span class="n"&gt;main&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;require&lt;/span&gt; &lt;span class="n"&gt;racket/tcp&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;tcp-listen&lt;/span&gt; &lt;span class="mi"&gt;1025&lt;/span&gt; &lt;span class="mi"&gt;1024&lt;/span&gt; &lt;span class="no"&gt;#t&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+ &lt;pre&gt;&lt;code&gt;(module+ main
+  (require racket/tcp)
+  (define server (tcp-listen 1025 1024 #t))
 
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;max-thread&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;round-robin&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;robin&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;
-        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;rob&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;modulo&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;add1&lt;/span&gt; &lt;span class="n"&gt;robin&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;max-thread&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;set!&lt;/span&gt; &lt;span class="n"&gt;robin&lt;/span&gt; &lt;span class="n"&gt;rob&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-        &lt;span class="n"&gt;rob&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+  (define max-thread 100)
+  (define round-robin
+    (let ([robin 0])
+      (lambda ()
+        (define rob (modulo (add1 robin) max-thread))
+        (set! robin rob)
+        rob)))
 
 
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;create-thread&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;reset-request!&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;set-request-segment-id!&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt; &lt;span class="no"&gt;#f&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;set-request-stdin!&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;open-output-bytes&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;set-request-data!&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;open-output-bytes&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;set-request-params!&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;open-output-bytes&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+  (define (create-thread request)
+  (define (reset-request! request)
+    (set-request-segment-id! request #f)
+    (set-request-stdin! request (open-output-bytes))
+    (set-request-data! request (open-output-bytes))
+    (set-request-params! request (open-output-bytes)))
 
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;thread&lt;/span&gt;
-     &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;
-       &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="n"&gt;main-loop&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;
-         &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;thread-receive&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-         &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;thread-receive&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-         &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;reset-request!&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-         &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="n"&gt;loop&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;
-           &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;sleep&lt;/span&gt; &lt;span class="mf"&gt;0.0001&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-           &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;port-closed?&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-               &lt;span class="c1"&gt;;; the end of the request&lt;/span&gt;
-               &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;close-input-port&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-               &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;begin&lt;/span&gt;
-                 &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;decode-segment&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                 &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;loop&lt;/span&gt;&lt;span class="p"&gt;))))&lt;/span&gt;
-         &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;main-loop&lt;/span&gt;&lt;span class="p"&gt;)))))&lt;/span&gt;
+  (thread
+     (lambda ()
+       (let main-loop ()
+         (define in (thread-receive))
+         (define out (thread-receive))
+         (reset-request! request)
+         (let loop ()
+           (sleep 0.0001)
+           (if (port-closed? out)
+               ;; the end of the request
+               (close-input-port in)
+               (begin
+                 (decode-segment request in out)
+                 (loop))))
+         (main-loop)))))
 
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define&lt;/span&gt; &lt;span class="n"&gt;thread-vec&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;for/vector&lt;/span&gt; &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;range&lt;/span&gt; &lt;span class="n"&gt;max-thread&lt;/span&gt;&lt;span class="p"&gt;)])&lt;/span&gt;
-                       &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;create-thread&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;create-empty-request&lt;/span&gt;&lt;span class="p"&gt;))))&lt;/span&gt;
+  (define thread-vec (for/vector ([i (range max-thread)])
+                       (create-thread (create-empty-request))))
 
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="n"&gt;loop-main&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let-values&lt;/span&gt; &lt;span class="p"&gt;([(&lt;/span&gt;&lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;tcp-accept&lt;/span&gt; &lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
-                 &lt;span class="c"&gt;#;&lt;/span&gt;&lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;create-empty-request&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
-                 &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="n"&gt;rob&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;round-robin&lt;/span&gt;&lt;span class="p"&gt;)])&lt;/span&gt;
+  (let loop-main ()
+    (let-values ([(in out) (tcp-accept server)]
+                 #;[(request) (create-empty-request)]
+                 [(rob) (round-robin)])
 
-      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;thread-send&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;vector-ref&lt;/span&gt; &lt;span class="n"&gt;thread-vec&lt;/span&gt; &lt;span class="n"&gt;rob&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;thread-send&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;vector-ref&lt;/span&gt; &lt;span class="n"&gt;thread-vec&lt;/span&gt; &lt;span class="n"&gt;rob&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-      &lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;loop-main&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
+      (thread-send (vector-ref thread-vec rob) in)
+      (thread-send (vector-ref thread-vec rob) out)
+      )
+    (loop-main)))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;I have no idea which approach is better, if i increase the number of concurrent connection in apache bench the round robin seems to do better, but this is maybe just due to the fact that round robin set an a fixed maximum number of threads.&lt;/p&gt;
+&lt;p&gt;I have no idea which approach is better, if I increase the number of concurrent connection in apache bench the round robin seems to do better, but this is maybe just due to the fact that round robin set a fixed maximum number of threads.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href="/code/fastcgi-robin.rkt"&gt;round robin code&lt;/a&gt;&lt;/p&gt;
 
@@ -2257,4 +1154,4 @@ array_list:
 
 &lt;p&gt;Quickly do a gambit implementation and get 6800 request/second.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="/code/fastcgi-gambit.scm"&gt;gambit code&lt;/a&gt;&lt;/p&gt;&lt;/html&gt;</description></item></channel></rss>
+&lt;p&gt;&lt;a href="/code/fastcgi-gambit.scm"&gt;gambit code&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

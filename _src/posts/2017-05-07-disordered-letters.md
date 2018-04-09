@@ -2,12 +2,12 @@
     Date: 2017-05-07T15:14:59
     Tags: language
 
-It is funny that words with  disordered letters can still be read fluently.
+It is funny that words with disordered letters can still be read fluently.
 
 <!-- more -->
 
-This little experiment just randomly suffle every letter in a word and keep the
-first and last letter untouched. If you want more go to the pristine idea <a
+This little experiment just randomly shuffle every letter in a word and keep the
+first and last letter untouched. For more go to the pristine idea <a
 href="http://www.mrc-cbu.cam.ac.uk/people/matt.davis/Cmabrigde/">Cmabrigde</a>.
 
 <textarea id="source-text">
@@ -51,7 +51,8 @@ When one wishes to play the wit, he sometimes wanders a little from the truth. I
 </p>
 </div>
 
-In this example the pain points where "lamplighters" it just look like
-a mess even knowing it is lamplighters, and islet can't find it even
-with the strong context "small pacific" which focus me to seach for
-"isle" but i didn't knew the word "islet" so it was harder to come by.
+In this example the pain points where lamplighters it just look like a mess even
+knowing it is lamplighters, and islet can't find it even with the strong context
+"small pacific" which focus me on the search "isle" but I didn't know the word
+islet so it was more difficult to infer it.
+

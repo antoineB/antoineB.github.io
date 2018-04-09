@@ -9,7 +9,7 @@ fill structures from sql result.  </p>
 
 ##The goal
 
-At end of this post we will achive this:
+At end of this post we will archive this:
 
 ```racket
 ;; assume the table actor exist and have at least id, name, age
@@ -28,7 +28,7 @@ At end of this post we will achive this:
 
 <!-- more -->
 
-It easily create struct out of sql result.
+It easily creates struct out of sql result.
 
 ##Implementation
 
@@ -74,7 +74,7 @@ the setter according to column name.
   (for/list ([row data])
     ;; build a new set of structure for each row
     (define structs (build-structs))
-    ;; for each column fetch  the relevant struct instance and apply its setter
+    ;; for each column fetch the relevant struct instance and apply its setter
     (for ([(name to-mapped) to-mappeds])
       ((first to-mapped)
        (hash-ref structs (second to-mapped))
@@ -120,12 +120,12 @@ Second the syntax transformer, the bare minimal to output the example above:
         #,@#'(args ...))]))
 ```
 
-##Short comming and evolution
+##Shortcoming and evolution
 
-The first sort comming that come is the relying on mutable and empty constructor
-fields, using the struct-info it should be posible to make the link between the
-field name and the position but probably can't specify an non empty constructor
-will not be missing arguments at runtime.
+The first shortcoming is the relying on mutable and empty constructor fields,
+using the struct-info it should be possible to make the link between the field
+name and the position but probably can't specify a non-empty constructor will
+not be missing arguments at runtime.
 
 Its is not possible to use multiple time the same struct definition:
 
@@ -140,7 +140,8 @@ Its is not possible to use multiple time the same struct definition:
   "SELECT a.*, b.id as b_id, b.name as b_name, b.age as b_age FROM actor AS a FROM actor AS b")
 ```
 
-The two actor will be confliction, we need to specify which actor we want to fill with, for example like:
+The two actor will be conflicting, we need to specify which one we want to be
+filled with, for example like:
 
 ```racket
 (select

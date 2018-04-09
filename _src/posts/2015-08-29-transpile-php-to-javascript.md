@@ -6,15 +6,15 @@
 
 <br/>
 
-I spend a good part of my work time in front of php or javascript code, so i
+I spend a good part of my work time in front of php or javascript code, so I
 wonder what will it be to compile php to javascript (in a browser context
-only). All of this is not tested it is just out of my head, i should have looked up
+only). All of this is not tested it is just out of my head, I should have looked up
 how other have come up with problems like <code>yield</code> but this would kill
 all interest.
 
 <!-- more -->
 
-Just some specifications of the top level definition that will be used through
+Just some specifications of the top-level definition that will be used through
 all the post:
 
 ```javascript
@@ -42,7 +42,7 @@ PHP type to javascript
 8. array -> a new class PHP.Array
 9. object -> a javascript object instance of PHP.Object
 
-There is no much thought to put into those choices maybe a wiser will try to have the
+There is not much thought to put into those choices maybe a wiser will try to have the
 maximum matching behavior between php <code>==</code>, <code>===</code> and js
 counter parts or other strategies to reduce the overhead of type checking.
 
@@ -88,7 +88,7 @@ PHP = (function () {
             if (obj === undefined || obj === null || obj === UNASSIGNED) {
                 return null;
             }
-            throw new String('hope it never happen');
+            throw new String('hope it never happens');
         },
         js_to_php: function (obj) {
             if (obj instanceof window.Object) {
@@ -122,7 +122,7 @@ PHP = (function () {
             if (type == 'boolean') {
                 return obj;
             }
-            throw new String('hope it never happen');
+            throw new String('hope it never happens');
         },
         // return a friendly datastructure from the point of view of javascript
         php_to_js: function (obj) {
@@ -158,7 +158,7 @@ PHPArray.prototype = Object.create(Array.prototype);
 
 ## Casting
 
-This should be carefully done according to the php
+This should be carefully done accordingly to the php
 [docs](http://php.net/manual/en/types.comparisons.php), the <code>(bool)</code>
 operator as an example:
 
@@ -227,12 +227,12 @@ PHPFunction.abc = function() {
 
 The <code>PHP.states[0]</code> correspond to the globals
 variables. <code>PHP.states</code> is necessary because
-<code>get_defined_vars</code> and <code>extract</code> could be call dynamicaly
+<code>get_defined_vars</code> and <code>extract</code> could be call dynamically
 and will always be able to reference the states they relate two with
 <code>PHP.states[PHP.states.length - 1]</code>.
 
 
-For the rest of the code example i will use a direct mapping for readability.
+For the rest of the code example I will use a direct mapping for readability.
 
 ## optimization
 
@@ -241,7 +241,7 @@ If it can be proved that the current function code didn't call
 could be used instead.
 
 <code>PHP.states[PHP.states.length - 1]</code> may be slower than
-<code>PHP.states[0]</code> so the latter convention sould be used where
+<code>PHP.states[0]</code> so the latter convention should be used where
 <code>0</code> denote the current state and
 <code>PHP.states[PHP.states.length - 1]</code> the globals.
 
@@ -327,12 +327,12 @@ explicitly by lack of scope in javascript.
 The constructor is composed of two parts the first that create the properties,
 assign their default value and call the save part of the constructor on the
 parent. The second is the user defined <code>__constructor</code> code. The
-parent constructor should be call explicitly in php so that why there is the
+parent constructor should be called explicitly in php so that why there is the
 variable PHPConstructorBasic.
 
-Because i didn't use the javascript inheritance i need to wrap every use of <code>-></code>
-with a function. The fact i put <code>this</code> twice is not a mistake it's the current
-instance, it's seems silly in that example, but usefull when you do <code>$someVar =
+Because I didn't use the javascript inheritance, I need to wrap every use of <code>-></code>
+with a function. The fact I put <code>this</code> twice is not a mistake it's the current
+instance, it seems silly in that example, but useful when you do <code>$someVar =
 $this; $someVar->privateThing</code>. And then simulate the inheritance in the code in
 object_assign_property something like:
 
@@ -446,7 +446,7 @@ compile time, so no javascript involved.
 
 ## Optimization
 
-If it can proved which method will be call then the
+If it can prove which method will be call then the
 <code>object_method_call</code> become useless and the direct access to the
 function can be used, and this could be done a lot.
 
@@ -477,7 +477,7 @@ respectively with <code>throw new PHP.Exit()</code> and <code>throw new
 PHP.Die()</code>.
 
 For errors this is different because errors don't stop the execution of the code, i
-don't know all the cases where error happen but the only one i see demanding
+don't know all the cases where error happen but the only one I see demanding
 extra work is the access to an undefined variable.
 
 ```php
@@ -532,7 +532,7 @@ if (PHP.to_bool(expr)) {}
 
 # Yield
 
-Assume a funcion like so:
+Assume a function like so:
 
 ```php
 <?php
@@ -549,7 +549,7 @@ function fn() {
 ```
 
 The yield can be seen as a function that return at yield, and when call later
-will not start from the begining of the function but from the last used yield.
+will not start from the beginning of the function but from the last used yield.
 And also have the same state from last call.
 
 ```javascript
@@ -636,7 +636,7 @@ function fn($datas) {
 }
 ```
 
-just convert the goto, but let the yield untreated.
+Just convert the goto, but let the yield untreated.
 
 ```javascript
 PHP.Goto = function (name) {
@@ -826,11 +826,11 @@ And more.
 
 # Conclusion
 
-It's more complex than i would have thought in the first place. Minification seems
+It's more complex than I would have thought in the first place. Minification seems
 to be feasible only on white space and on few PHP.{} name definition. The dead
-code elimination is impossible if the used function can't be infered from a static
+code elimination is impossible if the used function can't be inferred from a static
 analysis (use <code>call_user_function<code> or <code>$this->{$expr}()</code>
-will forbid optimization) of the code is used, that will lead to heavy weight file. The
+will forbid optimization) of the code is used, that will lead to heavyweight file. The
 constant need to convert thing in and out could also greatly decrease the
 performances and can't be easily optimized like method calls.
 

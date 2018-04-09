@@ -4,7 +4,7 @@
 
     <meta charset="utf-8">
     <title>exploring typecheking sql query in typed/racket</title>
-    <meta name="description" content="This post will describe a   POC on how to typecheck sql query in typed/racket.  The goal is to make this typecheck:                     1 2 3 4 5 6 7              (: some-query : (Listof (Vector String String))) (define some-query   (query    movies    #:...">
+    <meta name="description" content="This post will describe a   POC on how to typecheck sql query in typed/racket.  The goal is to make this typecheck:   `(: some-query : (Listof (Vector String String))) (define some-query   (query    movies    #:from     ([actor a] [movie m])    #:where   ...">
     <meta name="author"      content="antoine">
     <meta name="keywords"    content="racket">
     <meta name="viewport"    content="width=device-width, initial-scale=1.0">
@@ -92,64 +92,29 @@
 <p>The goal is to make this typecheck:</p>
 
 <div class="brush: racket">
- <table class="sourcetable">
-  <tbody>
-   <tr>
-    <td class="linenos">
-     <div class="linenodiv">
-      <pre>1
-2
-3
-4
-5
-6
-7</pre></div></td>
-    <td class="code">
-     <div class="source">
-      <pre><span class="p">(</span><span class="n">:</span> <span class="n">some-query</span> <span class="n">:</span> <span class="p">(</span><span class="n">Listof</span> <span class="p">(</span><span class="n">Vector</span> <span class="n">String</span> <span class="n">String</span><span class="p">)))</span>
-<span class="p">(</span><span class="k">define</span> <span class="n">some-query</span>
-  <span class="p">(</span><span class="n">query</span>
-   <span class="n">movies</span>
-   <span class="kd">#:from</span>     <span class="p">([</span><span class="n">actor</span> <span class="n">a</span><span class="p">]</span> <span class="p">[</span><span class="n">movie</span> <span class="n">m</span><span class="p">])</span>
-   <span class="kd">#:where</span>    <span class="p">(</span><span class="nb">=</span> <span class="n">a.name</span> <span class="s2">"Jhon Wayne"</span><span class="p">)</span>
-   <span class="kd">#:select</span>   <span class="p">(</span><span class="n">a.name</span> <span class="n">m.name</span><span class="p">)))</span>
-</pre></div>
-</td></tr></tbody></table>
-</div>
+ <pre><code>(: some-query : (Listof (Vector String String)))
+(define some-query
+  (query
+   movies
+   #:from     ([actor a] [movie m])
+   #:where    (= a.name "Jhon Wayne")
+   #:select   (a.name m.name)))</code></pre></div>
 
 <p>With the schema defined as:</p>
 
 <div class="brush: racket">
- <table class="sourcetable">
-  <tbody>
-   <tr>
-    <td class="linenos">
-     <div class="linenodiv">
-      <pre>1
-2
-3
-4
-5
-6
-7
-8</pre></div></td>
-    <td class="code">
-     <div class="source">
-      <pre><span class="p">(</span><span class="n">define-schema</span> <span class="n">movies</span>
-  <span class="p">(</span><span class="n">actor</span>    <span class="p">[</span><span class="n">id</span> <span class="n">Integer</span><span class="p">]</span>
-            <span class="p">[</span><span class="n">name</span> <span class="n">String</span><span class="p">])</span>
-  <span class="p">(</span><span class="n">movie</span>    <span class="p">[</span><span class="n">id</span> <span class="n">Integer</span><span class="p">]</span>
-            <span class="p">[</span><span class="n">name</span> <span class="n">String</span><span class="p">]</span>
-            <span class="p">[</span><span class="n">director_id</span> <span class="n">Integer</span><span class="p">])</span>
-  <span class="p">(</span><span class="n">director</span> <span class="p">[</span><span class="n">id</span> <span class="n">Integer</span><span class="p">]</span>
-            <span class="p">[</span><span class="n">name</span> <span class="n">String</span><span class="p">]))</span>
-</pre></div>
-</td></tr></tbody></table>
-</div>
+ <pre><code>(define-schema movies
+  (actor    [id Integer]
+            [name String])
+  (movie    [id Integer]
+            [name String]
+            [director_id Integer])
+  (director [id Integer]
+            [name String]))</code></pre></div>
 <!-- more-->
 
 <p>This 
- <abbr title="Proof Of Concept">POC</abbr> already take me too much time so there will be short coming the full source code is available <a href="/code/typed-db.rkt">here</a> and its <a href="/code/typed-db-example.rkt">example</a>.</p>
+ <abbr title="Proof Of Concept">POC</abbr> already take me too much time so there will be shortcomings the full source code is available <a href="/code/typed-db.rkt">here</a> and its <a href="/code/typed-db-example.rkt">example</a>.</p>
 
 <h2 id="the-define-schema-macro">The define-schema macro</h2>
 
@@ -158,154 +123,73 @@
 <p>The code isn&rsquo;t worth commenting the expanded code will be:</p>
 
 <div class="brush: racket">
- <table class="sourcetable">
-  <tbody>
-   <tr>
-    <td class="linenos">
-     <div class="linenodiv">
-      <pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10</pre></div></td>
-    <td class="code">
-     <div class="source">
-      <pre><span class="p">(</span><span class="k">define-syntax</span> <span class="n">movies</span>
-  <span class="p">(</span><span class="n">schema-st</span> 
-   <span class="p">(</span><span class="nb">list</span> 
-    <span class="o">'</span><span class="ss">movies</span>
-    <span class="p">(</span><span class="k">quote-syntax</span>
-     <span class="p">((</span><span class="n">actor</span> <span class="p">((</span><span class="n">id</span> <span class="n">Integer</span><span class="p">)</span> <span class="p">(</span><span class="n">name</span> <span class="n">String</span><span class="p">)))</span>
-      <span class="p">(</span><span class="n">movie</span> <span class="p">((</span><span class="n">id</span> <span class="n">Integer</span><span class="p">)</span> <span class="p">(</span><span class="n">name</span> <span class="n">String</span><span class="p">)</span> <span class="p">(</span><span class="n">director_id</span> <span class="n">Integer</span><span class="p">)))</span>
-      <span class="p">(</span><span class="n">director</span> <span class="p">((</span><span class="n">id</span> <span class="n">Integer</span><span class="p">)</span> <span class="p">(</span><span class="n">name</span> <span class="n">String</span><span class="p">))))))))</span>
+ <pre><code>(define-syntax movies
+  (schema-st 
+   (list 
+    'movies
+    (quote-syntax
+     ((actor ((id Integer) (name String)))
+      (movie ((id Integer) (name String) (director_id Integer)))
+      (director ((id Integer) (name String))))))))
 
-<span class="p">(</span><span class="k">define-for-syntax</span> <span class="p">(</span><span class="k">struct</span> <span class="n">schema-st</span> <span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="kd">#:property</span> <span class="nb">prop:procedure</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="n">st</span><span class="p">)</span> <span class="p">(</span><span class="n">schema-st-data</span> <span class="n">st</span><span class="p">))))</span>
-</pre></div>
-</td></tr></tbody></table>
-</div>
+(define-for-syntax (struct schema-st (data) #:property prop:procedure (lambda (st) (schema-st-data st))))</code></pre></div>
 
-<p>This is completely straight forward it define a <code>movie</code> transformer that retains data available for other macros.</p>
+<p>This is completely straight forward it defines a <code>movie</code> transformer that retains data available for other macros.</p>
 
-<p>For short coming reasons it&rsquo;s unclear if using the struct schema is necessary or if <code>(define-syntax movies (list &hellip;))</code> would have done the trick.</p>
+<p>For shortcoming reasons it&rsquo;s unclear if using the struct schema is necessary or if <code>(define-syntax movies (list &hellip;))</code> would have done the trick.</p>
 
-<p>Also the data structure shouldn&rsquo;t have be a complete syntax object of the whole schema information but just a syntax object of the types, like:</p>
+<p>Also, the data structure shouldn&rsquo;t have been a complete syntax object of the whole schema information but just a syntax object of the types, like:</p>
 
 <div class="brush: racket">
- <table class="sourcetable">
-  <tbody>
-   <tr>
-    <td class="linenos">
-     <div class="linenodiv">
-      <pre>1
-2
-3
-4</pre></div></td>
-    <td class="code">
-     <div class="source">
-      <pre><span class="o">`</span><span class="p">(</span><span class="ss">movies</span>
-  <span class="p">((</span><span class="ss">actor</span> <span class="p">((</span><span class="ss">id</span> <span class="o">,#'</span><span class="n">Integer</span><span class="p">)</span> <span class="p">(</span><span class="ss">name</span> <span class="o">,#'</span><span class="n">String</span><span class="p">)))</span>
-   <span class="p">(</span><span class="ss">movie</span> <span class="p">((</span><span class="ss">id</span> <span class="o">,#'</span><span class="n">Integer</span><span class="p">)</span> <span class="p">(</span><span class="ss">name</span> <span class="o">,#'</span><span class="n">String</span><span class="p">)</span> <span class="p">(</span><span class="ss">director_id</span> <span class="o">,#'</span><span class="n">Integer</span><span class="p">)))</span>
-   <span class="p">(</span><span class="ss">director</span> <span class="p">((</span><span class="ss">id</span> <span class="o">,#',#'</span><span class="n">Integer</span><span class="p">)</span> <span class="p">(</span><span class="ss">name</span> <span class="o">,#'</span><span class="n">String</span><span class="p">)))))</span>
-</pre></div>
-</td></tr></tbody></table>
-</div>
+ <pre><code>`(movies
+  ((actor ((id ,#'Integer) (name ,#'String)))
+   (movie ((id ,#'Integer) (name ,#'String) (director_id ,#'Integer)))
+   (director ((id ,#',#'Integer) (name ,#'String)))))</code></pre></div>
 
 <p>And it also could output type alias to have abstract type:</p>
 
 <div class="brush: racket">
- <table class="sourcetable">
-  <tbody>
-   <tr>
-    <td class="linenos">
-     <div class="linenodiv">
-      <pre>1
-2
-3
-4</pre></div></td>
-    <td class="code">
-     <div class="source">
-      <pre><span class="p">(</span><span class="n">define-type</span> <span class="n">movies.actor.id</span> <span class="n">Integer</span><span class="p">)</span>
-<span class="p">(</span><span class="n">define-type</span> <span class="n">movies.actor.name</span> <span class="n">String</span><span class="p">)</span>
-<span class="p">(</span><span class="n">define-type</span> <span class="n">movies.movie.id</span> <span class="n">Integer</span><span class="p">)</span>
-<span class="c1">;;...</span>
-</pre></div>
-</td></tr></tbody></table>
-</div>
+ <pre><code>(define-type movies.actor.id Integer)
+(define-type movies.actor.name String)
+(define-type movies.movie.id Integer)
+;;...</code></pre></div>
 
 <h2 id="the-query-macro">The query macro</h2>
 
 <p>Copied the example here to refresh your mind.</p>
 
 <div class="brush: racket">
- <table class="sourcetable">
-  <tbody>
-   <tr>
-    <td class="linenos">
-     <div class="linenodiv">
-      <pre>1
-2
-3
-4
-5
-6
-7</pre></div></td>
-    <td class="code">
-     <div class="source">
-      <pre><span class="p">(</span><span class="n">:</span> <span class="n">some-query</span> <span class="n">:</span> <span class="p">(</span><span class="n">Listof</span> <span class="p">(</span><span class="n">Vector</span> <span class="n">String</span> <span class="n">String</span><span class="p">)))</span>
-<span class="p">(</span><span class="k">define</span> <span class="n">some-query</span>
-  <span class="p">(</span><span class="n">query</span>
-   <span class="n">movies</span>
-   <span class="kd">#:from</span>     <span class="p">([</span><span class="n">actor</span> <span class="n">a</span><span class="p">]</span> <span class="p">[</span><span class="n">movie</span> <span class="n">m</span><span class="p">])</span>
-   <span class="kd">#:where</span>    <span class="p">(</span><span class="nb">=</span> <span class="n">a.name</span> <span class="s2">"Jhon Wayne"</span><span class="p">)</span>
-   <span class="kd">#:select</span>   <span class="p">(</span><span class="n">a.name</span> <span class="n">m.name</span><span class="p">)))</span>
-</pre></div>
-</td></tr></tbody></table>
-</div>
+ <pre><code>(: some-query : (Listof (Vector String String)))
+(define some-query
+  (query
+   movies
+   #:from     ([actor a] [movie m])
+   #:where    (= a.name "Jhon Wayne")
+   #:select   (a.name m.name)))</code></pre></div>
 
 <p>This one take the definition by whatever you have named it, <code>movies</code> in this case. It will fetch the schema definition thought <code>syntax-local-value</code> so you have to pass the <code>movies</code> every time you use the <code>query</code> macro.</p>
 
-<p>As you would expect this macro check that <code>#:from</code> and <code>#:select</code> are present only once, bark if an alias isn&rsquo;t defined for each tables, for select and where it check the columns <code>name</code> are present in table <code>actor</code> and <code>movie</code>.</p>
+<p>As you would expect this macro check that <code>#:from</code> and <code>#:select</code> are present only once, bark if an alias isn&rsquo;t defined for each table, for select and where it checks the columns <code>name</code> are present in table <code>actor</code> and <code>movie</code>.</p>
 
-<p>The expanded code isn&rsquo;t even usefull just to ensure the typecheking mechanism works.</p>
+<p>The expanded code isn&rsquo;t even useful just to ensure the typecheking mechanism works.</p>
 
 <p>The two interesting parts are:</p>
 
 <ul>
  <li>
-  <p>It use <code>ann</code> on the where expression to ensure it have the type of  <code>a.name</code> so it give <code>(ann &ldquo;Jhon Wayne&rdquo; String)</code></p></li>
+  <p>It uses <code>ann</code> on the where expression to ensure it has the type of  <code>a.name</code> so it gives <code>(ann &ldquo;Jhon Wayne&rdquo; String)</code></p></li>
  <li>
-  <p>It use <code>cast</code> on the query result and generate runtime assertion on  every rows. Typed/racket didn&rsquo;t provide an <code>unsafe-cast</code> form yet.</p></li></ul>
+  <p>It uses <code>cast</code> on the query result and generate runtime assertion on  every rows. Typed/racket didn&rsquo;t provide an <code>unsafe-cast</code> form yet.</p></li></ul>
 
 <p>The expansion could look like:</p>
 
 <div class="brush: racket">
- <table class="sourcetable">
-  <tbody>
-   <tr>
-    <td class="linenos">
-     <div class="linenodiv">
-      <pre>1
-2
-3
-4
-5
-6</pre></div></td>
-    <td class="code">
-     <div class="source">
-      <pre><span class="p">(</span><span class="n">:</span> <span class="n">some-query</span> <span class="n">:</span> <span class="p">(</span><span class="n">Listof</span> <span class="p">(</span><span class="n">Vector</span> <span class="n">String</span> <span class="n">String</span><span class="p">)))</span>
-<span class="p">(</span><span class="k">define</span> <span class="n">some-query</span>
-  <span class="p">(</span><span class="n">cast</span> <span class="p">(</span><span class="n">exec-query</span> 
-         <span class="s2">"SELECT a.name, m.name FROM actor AS a, movie AS m WHERE a.name = ?"</span>
-         <span class="p">(</span><span class="n">ann</span> <span class="s2">"Jhon Wayne"</span> <span class="n">String</span><span class="p">))</span>
-        <span class="p">(</span><span class="n">Listof</span> <span class="p">(</span><span class="n">Vectorof</span> <span class="n">String</span> <span class="n">String</span><span class="p">))))</span>
-</pre></div>
-</td></tr></tbody></table>
-</div>
+ <pre><code>(: some-query : (Listof (Vector String String)))
+(define some-query
+  (cast (exec-query 
+         "SELECT a.name, m.name FROM actor AS a, movie AS m WHERE a.name = ?"
+         (ann "Jhon Wayne" String))
+        (Listof (Vectorof String String))))</code></pre></div>
 
 <h2 id="conclusion">Conclusion</h2>
 
@@ -318,7 +202,7 @@
   <p>The <code>query</code> 
    <abbr title="Domain Specific Language">DSL</abbr> is  redundant with SQL because it&rsquo;s already a DSL. It may be possible to use a  reader for SQL something like <code>#sql"SELECT * FROM table"</code>.</p></li>
  <li>
-  <p>The types of the schema information didn&rsquo;t reflect the SQL type, the ability  to pass any kind of type alone isn&rsquo;t usefull, it should also pass two  procedures one to convert from the complex type to some SQL representation  and the inverse. Example: if you want to use json in some column  <code>option</code> of type <code>TEXT</code> the definition should be  <code>[options Json read-json write-json]</code>.</p></li>
+  <p>The types of the schema information didn&rsquo;t reflect the SQL type, the ability  to pass any kind of type alone isn&rsquo;t useful, it should also pass two  procedures one to convert from the complex type to some SQL representation  and the inverse. Example: if you want to use json in some column  <code>option</code> of type <code>TEXT</code> the definition should be  <code>[options Json read-json write-json]</code>.</p></li>
  <li>
   <p>All this is an awful lot of works. :)</p></li></ol>
    </div>

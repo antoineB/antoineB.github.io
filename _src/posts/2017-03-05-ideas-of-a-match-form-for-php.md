@@ -54,7 +54,7 @@ match($someExpr) {
 }
 ```
 
-Explaining of the behaviours involved here:
+Explaining of the behaviors involved here:
 
 - <code>12</code>, <code>"toto"</code> or any scalar will be check with
   <code>===</code>.
@@ -133,14 +133,14 @@ as_pattern:
 
 ## Implementing a P.O.C.
 
-Like <code>match</code>, a macro that spit out racket code, i will implement
+Like <code>match</code>, a macro that spit out racket code, I will implement
 this as a pre-processor that spit out valid PHP. This is not a usable solution
-because it breaks line number in errors messages. i have started to write this
+because it breaks line number in errors messages. I have started to write this
 <abbr title="Proof Of Concept">POC</abbr> in the PHP VM (to keep correct line
 number) but the whole process was slow and cumbersome
 ([here is the diff](/code/poc_vm.patch) that pave the basics form commit
-85b9055a86 [aka PHP 7.1]). The other problem is the generate code rely on 3
-globals variables and the whole thing will turn bad if you mess with them inside
+85b9055a86 [aka PHP 7.1]). The other problem is that the generated code rely on 3
+global variables and the whole thing will turn bad if you mess with them inside
 a match.
 
 Some quick glance at how this is done.
@@ -150,7 +150,7 @@ Some quick glance at how this is done.
 
 match (expr) {
     case pattern: statements... break;
-    default: // comme switch
+    default: // like switch
 }
 ```
 
@@ -159,11 +159,11 @@ Will ouput:
 ```php
 <?php
 
-// If there is a match before every globals variables are re-initialized.
+// If there is a match before every global variables are re-initialized.
 
 // Used to eval expression just once.
 $__MATCH__expr = expr;
-// Used to store variables and populare (extract) the current scope with them
+// Used to store variables and populate (extract) the current scope with them
 only if the whole clause match.
 $__MATCH__variables = []; // of shape 'variableName' => value.
 $__MATCH__result = true;
@@ -179,7 +179,7 @@ $__MATCH__case0 = function ($__MATCH__expr) use (&$__MATCH__variables, &$__MATCH
     return $__MATCH__result;
 }
 
-// Use switch because match has the same behaviour of switch regarding break.
+// Use switch because match has the same behavior of switch regarding break.
 switch (true) {
   case $__MATCH__case0($__MATCH__expr):
       extract($__MATCH__variables);
@@ -267,11 +267,11 @@ I see only 4 solution:
 
 - Adding a new keyword like <code>&&&</code>.
 - Removing expression all together.
-- Removing and and not all together.
+- Removing and not all together.
 - Escape expression with something like <code>eval</code> example <code>case
   eval(1 + 1) && eval($obj->getStuff()):</code>.
   
-I will bet on now for removing and and not.
+I will bet on now for removing and not.
 
 ### Traversable and object behaving as array
 
@@ -322,7 +322,7 @@ For the <code>app</code> parts:
 
 // will match [1, 'stu'] but not [1, 'stuff']
 // case [1, eval(preg*match('/stu(ff)?/', $pattern, $m)) use($m) => [(mixed)]]:
-// use($m) subsitute $pattern value with $m's value.
+// use($m) substitute $pattern value with $m's value.
 
 // If a callable is given to eval so it is called
 // case [1, eval(function ($pattern) { preg_match('/stu(ff)?/', $pattern, $m); return $m; }) => [(mixed)]]:
@@ -338,7 +338,7 @@ For the <code>app</code> parts:
 ### Conclusion with whole hypothetical grammar
 
 Regarding previous point here is a grammar that sum it up (contrary to the
-previous one i didn't check if it didn't run into LLAR conflicts).
+previous one I didn't check if it didn't run into LLAR conflicts).
 
 ```yacc
 pattern:
@@ -439,7 +439,7 @@ array_list:
     ;
 ```
 
-It add most of the feature from racket's <code>match</code> without adding any
+It adds most of the feature from racket's <code>match</code> without adding any
 new keyword. The missing element are <code>and</code>, <code>not</code>,
 <code>regexp</code> (very easy to add with a new keyword like <code>'preg_match'
 '/regex/' '=>' pattern</code>) and <code>..k</code>.

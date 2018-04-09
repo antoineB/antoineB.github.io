@@ -10,13 +10,14 @@
   <item>
    <title>Disordered letters</title>
    <link>http://antoineB.github.io/blog/2017/05/07/disordered-letters/?utm_source=language&amp;utm_medium=RSS</link>
-   <guid>urn:http-antoineB-github-io:-blog-2017-05-07-disordered-letters</guid>
+   <guid isPermaLink="false">urn:http-antoineB-github-io:-blog-2017-05-07-disordered-letters</guid>
    <pubDate>Sun, 07 May 2017 13:14:59 UT</pubDate>
-   <description>&lt;html&gt;
+   <author>antoine</author>
+   <description>
 &lt;p&gt;It is funny that words with disordered letters can still be read fluently.&lt;/p&gt;
 &lt;!-- more--&gt;
 
-&lt;p&gt;This little experiment just randomly suffle every letter in a word and keep the first and last letter untouched. If you want more go to the pristine idea &lt;a href="http://www.mrc-cbu.cam.ac.uk/people/matt.davis/Cmabrigde/"&gt;Cmabrigde&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This little experiment just randomly shuffle every letter in a word and keep the first and last letter untouched. For more go to the pristine idea &lt;a href="http://www.mrc-cbu.cam.ac.uk/people/matt.davis/Cmabrigde/"&gt;Cmabrigde&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;
  &lt;textarea id="source-text"&gt;Enter some text, and click.&lt;/textarea&gt;&lt;/p&gt;
@@ -47,4 +48,4 @@
 &lt;div class="bs-example"&gt;
  &lt;p&gt;When one wishes to play the wit, he sometimes wanders a little from the truth. I have not been altogether honest in what I have told you about the lamplighters. And I realize that I run the risk of giving a false idea of our planet to those who do not know it. Men occupy a very small place upon the Earth. If the two billion inhabitants who people its surface were all to stand upright and somewhat crowded together, as they do for some big public assembly, they could easily be put into one public square twenty miles long and twenty miles wide. All humanity could be piled up on a small Pacific islet.&lt;/p&gt;&lt;/div&gt;
 
-&lt;p&gt;In this example the pain points where &amp;ldquo;lamplighters&amp;rdquo; it just look like a mess even knowing it is lamplighters, and islet can&amp;rsquo;t find it even with the strong context &amp;ldquo;small pacific&amp;rdquo; which focus me to seach for &amp;ldquo;isle&amp;rdquo; but i didn&amp;rsquo;t knew the word &amp;ldquo;islet&amp;rdquo; so it was harder to come by.&lt;/p&gt;&lt;/html&gt;</description></item></channel></rss>
+&lt;p&gt;In this example the pain points where lamplighters it just look like a mess even knowing it is lamplighters, and islet can&amp;rsquo;t find it even with the strong context &amp;ldquo;small pacific&amp;rdquo; which focus me on the search &amp;ldquo;isle&amp;rdquo; but I didn&amp;rsquo;t know the word islet so it was more difficult to infer it.&lt;/p&gt;</description></item></channel></rss>

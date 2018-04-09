@@ -35,7 +35,7 @@ With the schema defined as:
 <!-- more -->
 
 This <abbr title="Proof Of Concept">POC</abbr> already take me too much time so
-there will be short coming the full source code is available
+there will be shortcomings the full source code is available
 [here](/code/typed-db.rkt) and its [example](/code/typed-db-example.rkt).
 
 
@@ -61,13 +61,13 @@ The code isn't worth commenting the expanded code will be:
 (define-for-syntax (struct schema-st (data) #:property prop:procedure (lambda (st) (schema-st-data st))))
 ```
 
-This is completely straight forward it define a <code>movie</code> transformer
+This is completely straight forward it defines a <code>movie</code> transformer
 that retains data available for other macros.
 
-For short coming reasons it's unclear if using the struct schema is necessary or
+For shortcoming reasons it's unclear if using the struct schema is necessary or
 if <code>(define-syntax movies (list ...))</code> would have done the trick.
 
-Also the data structure shouldn't have be a complete syntax object of the whole
+Also, the data structure shouldn't have been a complete syntax object of the whole
 schema information but just a syntax object of the types, like:
 
 ```racket
@@ -107,18 +107,18 @@ every time you use the <code>query</code> macro.
 
 As you would expect this macro check that <code>#:from</code> and
 <code>#:select</code> are present only once, bark if an alias isn't defined for
-each tables, for select and where it check the columns <code>name</code> are
+each table, for select and where it checks the columns <code>name</code> are
 present in table <code>actor</code> and <code>movie</code>.
 
-The expanded code isn't even usefull just to ensure the typecheking mechanism
+The expanded code isn't even useful just to ensure the typecheking mechanism
 works.
 
 The two interesting parts are:
 
-- It use <code>ann</code> on the where expression to ensure it have the type of
-  <code>a.name</code> so it give <code>(ann "Jhon Wayne" String)</code>
+- It uses <code>ann</code> on the where expression to ensure it has the type of
+  <code>a.name</code> so it gives <code>(ann "Jhon Wayne" String)</code>
   
-- It use <code>cast</code> on the query result and generate runtime assertion on
+- It uses <code>cast</code> on the query result and generate runtime assertion on
   every rows. Typed/racket didn't provide an <code>unsafe-cast</code> form yet.
 
 The expansion could look like:
@@ -148,7 +148,7 @@ The expansion could look like:
    reader for SQL something like <code>#sql"SELECT * FROM table"</code>.
    
 4. The types of the schema information didn't reflect the SQL type, the ability
-   to pass any kind of type alone isn't usefull, it should also pass two
+   to pass any kind of type alone isn't useful, it should also pass two
    procedures one to convert from the complex type to some SQL representation
    and the inverse. Example: if you want to use json in some column
    <code>option</code> of type <code>TEXT</code> the definition should be

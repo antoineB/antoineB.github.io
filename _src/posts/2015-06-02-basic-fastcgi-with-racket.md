@@ -19,8 +19,8 @@ The minimal [fastcgi implementation](fastcgi.com/devkit/doc/fcgi-spec.html) will
 
 <!-- more -->
 
-A request is composed of parts denoted here as _segment_. Every
-segments is composed of an header of 8 bytes and some data of <var>N</var> bytes and
+A request is composed of parts denoted here as _segment_. Each
+segment is composed of a header of 8 bytes and some data of <var>N</var> bytes and
 padding of <var>M</var> bytes where <var>N</var> and <var>M</var> >=0.
 
 The header is:
@@ -37,7 +37,7 @@ The header is:
 
 ## Racket implementation
 
-The decoding incomming bytes part:
+The decoding incoming bytes part:
 
 ```racket
 #lang racket
@@ -226,7 +226,7 @@ Apply this decoder and present them, also do convenience functions.
 
 ## Performance expectation
 
-To have an idea where the n° of requests per seconds i used <code>ab -c 25 -n 10000</code> on several configurations:
+To have an idea where the n° of requests per seconds I used <code>ab -c 25 -n 10000</code> on several configurations:
 
 * racket web/server (a web server written in pure racket): 1300
 * nginx + chicken fastcgi binding: 10000
@@ -235,7 +235,7 @@ To have an idea where the n° of requests per seconds i used <code>ab -c 25 -n 1
 * my stuff: 300
 
 Wait what 300, something is wrong obviously, furthermore <code>ab</code> get stuck most of
-the time at the last 1000 request. After suspecting the gc i find that i didn't
+the time at the last 1000 request. After suspecting the gc I find that I didn't
 read the doc for
 [tcp-listen](http://docs.racket-lang.org/reference/tcp.html?q=tcp-liste#%28def._%28%28lib._racket%2Ftcp..rkt%29._tcp-listen%29%29)
 and changed the max-allow-wait to something like 1024. And get then 2500
@@ -345,9 +345,9 @@ request, create a bunch of thread and select them through a round robin approach
     (loop-main)))
 ```
 
-I have no idea which approach is better, if i increase the number of concurrent
+I have no idea which approach is better, if I increase the number of concurrent
 connection in apache bench the round robin seems to do better, but this is maybe
-just due to the fact that round robin set an a fixed maximum number of threads.
+just due to the fact that round robin set a fixed maximum number of threads.
 
 [round robin code](/code/fastcgi-robin.rkt)
 
